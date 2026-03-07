@@ -24,20 +24,9 @@ class UpdateUserRequest extends FormRequest
         return [
             'last_name' => ['nullable', 'string', 'max:100'],
             'first_name' => ['nullable', 'string', 'max:100'],
-            'middle_name' => ['nullable', 'string', 'max:100'],
             'email' => ['nullable', 'string', 'max:300'],
             'phone' => ['nullable', 'string', 'max:50'],
             'password' => ['nullable', 'string', 'min:8', 'max:255'],
-            'name' => ['nullable'],
         ];
-    }
-
-    use MergeFullName;
-
-    protected function passedValidation(): void
-    {
-        if ($this->input(['last_name', 'first_name', 'middle_name'])) {
-            $this->mergeFullNameFromParts();
-        }
     }
 }

@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         $admin = User::updateOrCreate([
-            'name' => 'mestash',
+            'first_name' => 'Ruslan',
+            'last_name' => 'Ivanov',
             'email' => 'zeuszeus1973@gmail.com',
             'phone' => '89162406172',
             'password' => Hash::make('M3st@sh1!'),

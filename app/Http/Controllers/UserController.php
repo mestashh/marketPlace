@@ -51,7 +51,8 @@ class UserController extends Controller
     {
         $data = $request->validated();
         $user = User::create([
-            'name' => $request->input('name'),
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => $data['password'],
@@ -70,10 +71,6 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-
-        if ($request->filled('name')) {
-            $data['name'] = $request->input('name');
-        }
 
         $user->update($data);
 
@@ -98,6 +95,6 @@ class UserController extends Controller
 
         $user->update($request->validated());
 
-        dd($user->id, $user->name, $request->validated());
+        return new UserResource($request->user());
     }
 }
