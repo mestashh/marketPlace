@@ -87,5 +87,17 @@ class UserController extends Controller
         return response()->noContent();
     }
 
+    public function me(Request $request)
+    {
+        return new UserResource($request->user());
+    }
 
+    public function updateMe(UpdateUserRequest $request)
+    {
+        $user = $request->user();
+
+        $user->update($request->validated());
+
+        dd($user->id, $user->name, $request->validated());
+    }
 }

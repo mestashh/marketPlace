@@ -28,6 +28,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['nullable', 'string', 'max:300'],
             'phone' => ['nullable', 'string', 'max:50'],
             'password' => ['nullable', 'string', 'min:8', 'max:255'],
+            'name' => ['nullable'],
         ];
     }
 
@@ -35,7 +36,7 @@ class UpdateUserRequest extends FormRequest
 
     protected function passedValidation(): void
     {
-        if ($this->hasAny(['last_name', 'first_name', 'middle_name'])) {
+        if ($this->input(['last_name', 'first_name', 'middle_name'])) {
             $this->mergeFullNameFromParts();
         }
     }
