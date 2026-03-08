@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-
 
 /**
  * @property mixed $user_id
  */
 class Address extends Model
 {
+    use hasFactory;
+
     protected $fillable = [
         'user_id',
         'country',
@@ -22,7 +23,6 @@ class Address extends Model
         'phone',
         'description',
     ];
-
 
     public function user(): BelongsTo
     {

@@ -97,4 +97,13 @@ class UserController extends Controller
 
         return new UserResource($request->user());
     }
+
+    public function destroyMe(Request $request)
+    {
+        $user = $request->user();
+
+        $user->delete();
+
+        return response()->noContent();
+    }
 }

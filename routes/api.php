@@ -21,4 +21,5 @@ Route::middleware('auth:sanctum')->apiResource('seller/shop', ShopController::cl
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('me', [UserController::class, 'me']);
     Route::patch('updateMe', [UserController::class, 'updateMe']);
+    Route::delete('destroyMe', [UserController::class, 'destroyMe']);
 });

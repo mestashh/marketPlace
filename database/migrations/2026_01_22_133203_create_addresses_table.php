@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('country', 50);
-            $table->string('city', 50);
-            $table->string('street', 50);
-            $table->string('house', 50);
+            $table->string('country', 100);
+            $table->string('city', 100);
+            $table->string('street', 100);
+            $table->string('house', 100);
             $table->string('phone', 20);
             $table->string('description', 100);
             $table->timestamps();
