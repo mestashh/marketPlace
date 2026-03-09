@@ -6,6 +6,7 @@ use App\Http\Requests\Address\StoreAddressRequest;
 use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class AddressController extends Controller
@@ -20,13 +21,7 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $user = request()->user();
-        $query = Address::query();
-        if (! $user->isAdmin()) {
-            $query->where('user_id', $user->id);
-        }
-
-        return AddressResource::collection($query->paginate(20));
+        return AddressResource::collection(Address::query()->paginate(20));
     }
 
     /**
@@ -61,6 +56,7 @@ class AddressController extends Controller
     public function update(UpdateAddressRequest $request, Address $address)
     {
         $address->update($request->validated());
+
         return new AddressResource($address);
     }
 

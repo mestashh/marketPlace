@@ -12,7 +12,7 @@ class AddressPolicy
      */
     public function viewAny(User $authUser): bool
     {
-        return true;
+        return $authUser->isAdmin();
     }
 
     public function view(User $authUser, Address $address): bool

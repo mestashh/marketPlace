@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\UserStatusEnum;
 use App\Models\Seller;
 use App\Models\User;
 
@@ -10,28 +11,28 @@ class SellerPolicy
     /**
      * Create a new policy instance.
      */
-    public function viewAny(User $authUser): bool
+    public function viewAny(User $user): bool
     {
-        return $authUser->isAdmin();
+        return $user->isAdmin();
     }
 
-    public function view(User $authUser, Seller $seller): bool
+    public function view(User $user, Seller $seller): bool
     {
-        return $authUser->isAdmin() || $authUser->id === $seller->user_id;
+        return $user->isAdmin() || $user->id === $seller->user_id;
     }
 
-    public function create(User $authUser): bool
+    public function create(User $user): bool
     {
-        return true;
+        return ! $user->isSeller();
     }
 
-    public function delete(User $authUser, Seller $seller): bool
+    public function delete(User $user, Seller $seller): bool
     {
-        return $authUser->isAdmin() || $seller->user_id === $authUser->id;
+        return $user->isAdmin() || $seller->user_id === $user->id;
     }
 
-    public function update(User $authUser, Seller $seller): bool
+    public function update(User $user, Seller $seller): bool
     {
-        return $authUser->isAdmin() || $authUser->id === $seller->user_id;
+        return $user->isAdmin() || $user->id === $seller->user_id;
     }
 }

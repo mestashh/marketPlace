@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->foreignId('seller_id')->constrained()->cascadeOnDelete();
             $table->string('name', 100);
             $table->string('description', 255);

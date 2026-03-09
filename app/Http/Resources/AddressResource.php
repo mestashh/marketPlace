@@ -12,6 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $house
  * @property mixed $description
  * @property mixed $phone
+ * @property mixed $uuid
  */
 class AddressResource extends JsonResource
 {
@@ -23,6 +24,7 @@ class AddressResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->uuid,
             'country' => $this->country,
             'city' => $this->city,
             'street' => $this->street,

@@ -11,7 +11,7 @@ class UpdateShopRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('seller')->check();
+        return true;
     }
 
     /**
@@ -22,8 +22,8 @@ class UpdateShopRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
-            'description' => ['required', 'string', 'max:255'],
+            'name' => ['sometimes', 'string', 'max:100'],
+            'description' => ['sometimes', 'string', 'max:255'],
         ];
     }
 }

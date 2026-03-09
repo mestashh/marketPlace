@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
@@ -14,8 +14,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Seller extends Authenticatable
 {
     use hasFactory;
-    protected $fillable = ['user_id', 'balance', 'withdrawable_balance', 'TIN', 'display_name'];
 
+    protected $fillable = ['user_id', 'balance', 'withdrawable_balance', 'TIN', 'display_name'];
 
     public function conversations(): HasMany
     {
@@ -35,5 +35,17 @@ class Seller extends Authenticatable
     public function shops(): HasMany
     {
         return $this->HasMany(Shop::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }

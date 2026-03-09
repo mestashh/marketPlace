@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,13 +14,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('email', 300)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 50)->unique();
             $table->string('password', 255);
-            $table->enum('access_status', ['blocked', 'access', 'checking'])->default('access');
+            $table->enum('access_status', UserStatusEnum::cases())->default(UserStatusEnum::ACCESS->value);
             $table->rememberToken();
             $table->timestamps();
         });

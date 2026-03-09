@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +14,13 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->unique('user_id');
             $table->integer('balance')->default(0);
             $table->integer('withdrawable_balance')->default(0);
             $table->string('TIN', 100)->unique();
+            $table->enum('access_status', UserStatusEnum::cases())->default(UserStatusEnum::CHECKING->value);
             $table->timestamps();
         });
     }

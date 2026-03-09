@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -36,6 +37,11 @@ class User extends Authenticatable
         return $this->admin()->exists();
     }
 
+    public function isSeller(): bool
+    {
+        return $this->seller()->exists();
+    }
+
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
@@ -64,5 +70,17 @@ class User extends Authenticatable
     public function reviews(): HasMany
     {
         return $this->HasMany(Review::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }

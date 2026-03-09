@@ -10,6 +10,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $name
  * @property mixed $description
  * @property mixed $status
+ * @property mixed $uuid
  */
 class ShopResource extends JsonResource
 {
@@ -21,10 +22,9 @@ class ShopResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'seller_id' => $this->seller_id,
+            'seller_uuid' => $this->seller->uuid,
             'name' => $this->name,
             'description' => $this->description,
-            'status' => $this->status,
         ];
     }
 }

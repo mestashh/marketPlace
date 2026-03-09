@@ -32,20 +32,22 @@ class ShopController extends Controller
 
         $shop = Shop::create([
             'name' => $data['name'],
+            'seller_id' => $request->user()->seller->id,
             'description' => $data['description'],
         ]);
 
         return new ShopResource($shop)
-            ->response(201);
+            ->response()
+            ->setStatusCode(201);
     }
 
     public function update(UpdateShopRequest $request, Shop $shop)
     {
-        return new ShopResource($shop->update($request->validated()))
-            ->response(202);
+        $shop->update($request->validated());
+        return new ShopResource($shop);
     }
 
-    public function delete(Shop $shop)
+    public function destroy(Shop $shop)
     {
         $shop->delete();
 

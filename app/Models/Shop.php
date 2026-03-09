@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Shop extends Model
 {
     use hasFactory;
-    protected $fillable = ['name', 'description', 'status'];
+
+    protected $fillable = ['name', 'description', 'status', 'seller_id'];
 
     public function products(): HasMany
     {
@@ -25,5 +27,17 @@ class Shop extends Model
     public function seller(): BelongsTo
     {
         return $this->BelongsTo(Seller::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
     }
 }

@@ -11,7 +11,7 @@ class StoreShopRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('seller')->check();
+        return true;
     }
 
     /**

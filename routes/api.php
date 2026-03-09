@@ -13,13 +13,10 @@ Route::post('/register', [UserController::class, 'store']);
 Route::middleware('auth:sanctum')->apiResource('users', UserController::class);
 
 Route::middleware('auth:sanctum')->apiResource('address', AddressController::class);
+
 Route::middleware('auth:sanctum')->apiResource('seller', SellerController::class);
+
 Route::middleware('auth:sanctum')->apiResource('admin', AdminController::class);
+
 Route::get('/shop', [ShopController::class, 'index']);
 Route::middleware('auth:sanctum')->apiResource('seller/shop', ShopController::class);
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('me', [UserController::class, 'me']);
-    Route::patch('updateMe', [UserController::class, 'updateMe']);
-    Route::delete('destroyMe', [UserController::class, 'destroyMe']);
-});
