@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
@@ -32,9 +33,14 @@ class Seller extends Authenticatable
         return $this->HasMany(SellerPayoutMethod::class);
     }
 
-    public function shops(): HasMany
+    public function shop(): HasOne
     {
-        return $this->HasMany(Shop::class);
+        return $this->HasOne(Shop::class);
+    }
+
+    public function hasShop(): bool
+    {
+        return $this->shop()->exists();
     }
 
     public static function booted(): void

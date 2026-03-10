@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\AdminRoleEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateAdminRequest extends FormRequest
 {
@@ -12,9 +14,7 @@ class UpdateAdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $targetUser = $this->route('user');
-
-        return $this->user('admin')->can('assignAdmin', $targetUser);
+        return true;
     }
 
     /**
@@ -25,7 +25,7 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['role', Rule::in(['support', 'admin', 'super_admin'])],
+            'role' => ['required', new Enum(AdminRoleEnum::class)],
         ];
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -31,4 +32,10 @@ Route::apiResource('category', CategoryController::class)
     ->only(['index', 'show']);
 Route::middleware('auth:sanctum')
     ->apiresource('category', CategoryController::class)
+    ->except(['index', 'show']);
+
+Route::apiResource('product', ProductController::class)
+    ->only(['index', 'show']);
+Route::middleware('auth:sanctum')
+    ->apiResource('product', ProductController::class)
     ->except(['index', 'show']);

@@ -11,13 +11,6 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user('seller');
-        $shop = $this->route('shop');
-        $product = $this->route('product');
-        if (! $user || ! $shop || ($user->id !== $shop->seller_id) || ($shop->status !== 'active') || ($product->shop_id !== $shop->id)) {
-            return false;
-        }
-
         return true;
     }
 

@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
+/**
+ * @property mixed $shop_id
+ */
 class Product extends Model
 {
     use hasFactory;
-    protected $fillable = ['name', 'description', 'status'];
+
+    protected $fillable = ['name', 'description', 'status', 'category_id', 'shop_id'];
 
     public function productImages(): HasMany
     {
@@ -35,5 +40,17 @@ class Product extends Model
     public function reviews(): HasMany
     {
         return $this->HasMany(Review::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }

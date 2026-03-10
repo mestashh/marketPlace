@@ -11,12 +11,6 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user('seller');
-        $shop = $this->route('shop');
-        if (! $user || ! $shop || ($user->id !== $shop->seller_id) || ($shop->status !== 'active')) {
-            return false;
-        }
-
         return true;
     }
 

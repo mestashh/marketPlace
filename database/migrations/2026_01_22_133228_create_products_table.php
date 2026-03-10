@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('shop_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained();
+            $table->uuid()->unique();
             $table->string('name', 50);
             $table->string('description', 100)->nullable();
             $table->enum('status', ['active', 'blocked', 'checking'])->default('checking');
