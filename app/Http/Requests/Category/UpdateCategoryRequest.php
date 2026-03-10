@@ -11,7 +11,7 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('admin')->check();
+        return true;
     }
 
     /**
@@ -22,8 +22,8 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable|required', 'string', 'min: 3', 'max: 50'],
-            'parent_id' => ['nullable|required', 'integer', 'exists: categories,id'],
+            'name' => ['nullable', 'string', 'min: 3', 'max: 50'],
+            'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
         ];
     }
 }

@@ -5,11 +5,12 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $name
+ * @property mixed $uuid
+ */
 class CategoryResource extends JsonResource
 {
-    private string $id;
-    private string $parent_id;
-    private string $name;
 
     /**
      * Transform the resource into an array.
@@ -19,8 +20,8 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'parent_id' => $this->parent_id,
+            'uuid' => $this->uuid,
+            'parent_uuid' => $this->parent?->uuid,
             'name' => $this->name,
         ];
     }
