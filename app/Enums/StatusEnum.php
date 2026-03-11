@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum UserStatusEnum: string
+enum StatusEnum: string
 {
     case ACCESS = 'access';
     case BANNED = 'banned';

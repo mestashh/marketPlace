@@ -19,10 +19,18 @@ Route::middleware('auth:sanctum')
     ->apiResource('address', AddressController::class);
 
 Route::middleware('auth:sanctum')
-    ->apiResource('seller', SellerController::class);
+    ->apiResource('admin', AdminController::class);
+Route::middleware('auth:sanctum')
+    ->group(function () {
+        Route::patch('product/status/{product}', [ProductController::class, 'changeStatus']);
+        Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
+        Route::patch('shop/status/{shop}', [ShopController::class, 'changeStatus']);
+        Route::patch('seller/status/{seller}', [SellerController::class, 'changeStatus']);
+    });
 
 Route::middleware('auth:sanctum')
-    ->apiResource('admin', AdminController::class);
+    ->apiResource('seller', SellerController::class)
+    ->except('index');
 
 Route::get('/shop', [ShopController::class, 'index']);
 Route::middleware('auth:sanctum')

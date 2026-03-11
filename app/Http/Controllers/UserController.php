@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
@@ -82,5 +83,13 @@ class UserController extends Controller
         $user->delete();
 
         return response()->noContent();
+    }
+
+    public function changeStatus(ChangeStatusRequest $request, User $user)
+    {
+        $this->authorize('changeStatus', $user);
+        $user->update($request->validated());
+
+        return new UserResource($user);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Models\User;
 
 class ProductController extends Controller
 {
@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         $this->authorizeResource(Product::class, 'product');
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -37,6 +38,7 @@ class ProductController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
         ]);
+
         return new ProductResource($product);
     }
 
@@ -54,6 +56,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->validated());
+
         return new ProductResource($product);
     }
 
@@ -63,6 +66,15 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+
         return response()->noContent();
+    }
+
+    public function changeStatus(ChangeStatusRequest $request, Product $product)
+    {
+        $this->authorize('changeStatus', $product);
+        $product->update($request->validated());
+
+        return new ProductResource($product);
     }
 }

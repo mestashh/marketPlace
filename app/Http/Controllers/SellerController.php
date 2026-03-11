@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\Seller\StoreSellerRequest;
 use App\Http\Requests\Seller\UpdateSellerRequest;
 use App\Http\Resources\SellerResource;
@@ -15,6 +16,7 @@ class SellerController extends Controller
     {
         $this->authorizeResource(Seller::class, 'seller');
     }
+
     public function index()
     {
         $sellers = Seller::query()->paginate(20);
@@ -53,5 +55,13 @@ class SellerController extends Controller
         $seller->delete();
 
         return response()->noContent();
+    }
+
+    public function changeStatus(ChangeStatusRequest $request, Seller $seller)
+    {
+        $this->authorize('changeStatus', $seller);
+        $seller->update($request->validated());
+
+        return new SellerResource($seller);
     }
 }

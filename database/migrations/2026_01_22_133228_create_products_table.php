@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->uuid()->unique();
             $table->string('name', 50);
             $table->string('description', 100)->nullable();
-            $table->enum('status', ['active', 'blocked', 'checking'])->default('checking');
+            $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->timestamps();
         });
     }

@@ -2,7 +2,8 @@
 
 namespace App\Policies;
 
-use App\Enums\UserStatusEnum;
+use App\Enums\AdminRoleEnum;
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -30,7 +31,7 @@ class ProductPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isSeller() && $user->seller->hasShop() && $user->seller->access_status === UserStatusEnum::ACCESS->value;
+        return $user->isSeller() && $user->seller->hasShop() && $user->seller->access_status === StatusEnum::ACCESS->value;
     }
 
     /**
@@ -38,7 +39,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === UserStatusEnum::ACCESS->value;
+        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === StatusEnum::ACCESS->value;
     }
 
     /**
@@ -46,6 +47,11 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === UserStatusEnum::ACCESS->value;
+        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === StatusEnum::ACCESS->value;
+    }
+
+    public function changeStatus(User $user): bool
+    {
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
     }
 }

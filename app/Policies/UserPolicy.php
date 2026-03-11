@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\AdminRoleEnum;
 use App\Models\User;
 
 class UserPolicy
@@ -9,9 +10,9 @@ class UserPolicy
     /**
      * Create a new policy instance.
      */
-    public function viewAny(User $authUser): bool
+    public function viewAny(User $user): bool
     {
-        return $authUser->isAdmin();
+        return $user->isAdmin();
     }
 
     public function view(User $authUser, User $user): bool
@@ -19,7 +20,7 @@ class UserPolicy
         return $authUser->isAdmin() || $authUser->id === $user->id;
     }
 
-    public function create(?User $authUser): bool
+    public function create(?User $user): bool
     {
         return true;
     }
@@ -32,5 +33,10 @@ class UserPolicy
     public function delete(User $authUser, User $user): bool
     {
         return $authUser->isAdmin() || $authUser->id === $user->id;
+    }
+
+    public function changeStatus(User $user): bool
+    {
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
     }
 }

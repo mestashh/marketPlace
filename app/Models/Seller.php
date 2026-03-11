@@ -16,7 +16,7 @@ class Seller extends Authenticatable
 {
     use hasFactory;
 
-    protected $fillable = ['user_id', 'balance', 'withdrawable_balance', 'TIN', 'display_name'];
+    protected $fillable = ['user_id', 'balance', 'withdrawable_balance', 'TIN', 'display_name', 'access_status'];
 
     public function conversations(): HasMany
     {

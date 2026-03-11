@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\UserStatusEnum;
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone', 50)->unique();
             $table->string('password', 255);
-            $table->enum('access_status', UserStatusEnum::cases())->default(UserStatusEnum::ACCESS->value);
+            $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::ACCESS->value);
             $table->rememberToken();
             $table->timestamps();
         });

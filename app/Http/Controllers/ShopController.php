@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\Shop\StoreShopRequest;
 use App\Http\Requests\Shop\UpdateShopRequest;
 use App\Http\Resources\ShopResource;
@@ -44,6 +45,7 @@ class ShopController extends Controller
     public function update(UpdateShopRequest $request, Shop $shop)
     {
         $shop->update($request->validated());
+
         return new ShopResource($shop);
     }
 
@@ -54,4 +56,11 @@ class ShopController extends Controller
         return response()->noContent();
     }
 
+    public function changeStatus(ChangeStatusRequest $request, Shop $shop)
+    {
+        $this->authorize('changeStatus', $shop);
+        $shop->update($request->validated());
+
+        return new ShopResource($shop);
+    }
 }

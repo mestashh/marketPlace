@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\UserStatusEnum;
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('balance')->default(0);
             $table->integer('withdrawable_balance')->default(0);
             $table->string('TIN', 100)->unique();
-            $table->enum('access_status', UserStatusEnum::cases())->default(UserStatusEnum::CHECKING->value);
+            $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->timestamps();
         });
     }

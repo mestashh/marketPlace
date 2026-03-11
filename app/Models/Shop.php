@@ -12,7 +12,7 @@ class Shop extends Model
 {
     use hasFactory;
 
-    protected $fillable = ['name', 'description', 'status', 'seller_id'];
+    protected $fillable = ['name', 'description', 'status', 'seller_id', 'access_status'];
 
     public function products(): HasMany
     {

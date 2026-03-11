@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->foreignId('seller_id')->constrained()->cascadeOnDelete();
             $table->string('name', 100);
             $table->string('description', 255);
-            $table->enum('status', ['active', 'blocked', 'paused', 'checking'])->default('checking');
+            $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->timestamps();
         });
     }

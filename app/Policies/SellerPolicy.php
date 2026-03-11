@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Enums\UserStatusEnum;
+use App\Enums\AdminRoleEnum;
 use App\Models\Seller;
 use App\Models\User;
 
@@ -34,5 +34,10 @@ class SellerPolicy
     public function update(User $user, Seller $seller): bool
     {
         return $user->isAdmin() || $user->id === $seller->user_id;
+    }
+
+    public function changeStatus(User $user): bool
+    {
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
     }
 }
