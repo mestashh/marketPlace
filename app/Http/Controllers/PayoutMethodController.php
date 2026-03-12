@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductVariant;
+use App\Models\PayoutMethod;
 use Illuminate\Http\Request;
 
-class ProductVariantsController
+class PayoutMethodController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class ProductVariantsController
     /**
      * Display the specified resource.
      */
-    public function show(ProductVariant $productVariants)
+    public function show(PayoutMethod $payoutMethods)
     {
         //
     }
@@ -42,7 +42,7 @@ class ProductVariantsController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductVariant $productVariants)
+    public function edit(PayoutMethod $payoutMethods)
     {
         //
     }
@@ -50,7 +50,7 @@ class ProductVariantsController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductVariant $productVariants)
+    public function update(Request $request, PayoutMethod $payoutMethods)
     {
         //
     }
@@ -58,7 +58,7 @@ class ProductVariantsController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductVariant $productVariants)
+    public function destroy(PayoutMethod $payoutMethods)
     {
         //
     }

@@ -79,6 +79,12 @@ class User extends Authenticatable
         static::creating(function ($model) {
             $model->uuid = Str::uuid();
         });
+
+        static::created(function ($user) {
+            Cart::create([
+                'user_id' => $user->id,
+            ]);
+        });
     }
 
     public function getRouteKeyName(): string

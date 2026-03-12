@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cart extends Model
 {
+    protected $fillable = ['user_id'];
+
     public function cartItems(): HasMany
     {
         return $this->HasMany(CartItem::class);

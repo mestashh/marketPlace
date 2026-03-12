@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Payment;
 
+use App\Enums\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StorePaymentMethodRequest extends FormRequest
 {
@@ -11,10 +13,6 @@ class StorePaymentMethodRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $admin = $this->user('admin');
-        if (! $admin) {
-            return false;
-        }
         return true;
     }
 
@@ -26,7 +24,7 @@ class StorePaymentMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => ['string', 'max:50', 'required'],
+            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
         ];
     }
 }

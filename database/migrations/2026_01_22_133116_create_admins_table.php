@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AdminRoleEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->uuid()->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('role', ['support', 'admin', 'super_admin']);
+            $table->enum('role', AdminRoleEnum::cases());
             $table->unique('user_id');
             $table->timestamps();
         });

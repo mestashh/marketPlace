@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
-class CategoriesController
+class ProductVariantController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class CategoriesController
     /**
      * Display the specified resource.
      */
-    public function show(Categories $categories)
+    public function show(ProductVariant $productVariants)
     {
         //
     }
@@ -42,7 +42,7 @@ class CategoriesController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Categories $categories)
+    public function edit(ProductVariant $productVariants)
     {
         //
     }
@@ -50,7 +50,7 @@ class CategoriesController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Categories $categories)
+    public function update(Request $request, ProductVariant $productVariants)
     {
         //
     }
@@ -58,7 +58,7 @@ class CategoriesController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categories $categories)
+    public function destroy(ProductVariant $productVariants)
     {
         //
     }

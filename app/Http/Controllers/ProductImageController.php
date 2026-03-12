@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PaymentMethod;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 
-class PaymentMethodsController
+class ProductImageController
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class PaymentMethodsController
     /**
      * Display the specified resource.
      */
-    public function show(PaymentMethod $paymentMethods)
+    public function show(ProductImage $productImages)
     {
         //
     }
@@ -42,7 +42,7 @@ class PaymentMethodsController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PaymentMethod $paymentMethods)
+    public function edit(ProductImage $productImages)
     {
         //
     }
@@ -50,7 +50,7 @@ class PaymentMethodsController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PaymentMethod $paymentMethods)
+    public function update(Request $request, ProductImage $productImages)
     {
         //
     }
@@ -58,7 +58,7 @@ class PaymentMethodsController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PaymentMethod $paymentMethods)
+    public function destroy(ProductImage $productImages)
     {
         //
     }
