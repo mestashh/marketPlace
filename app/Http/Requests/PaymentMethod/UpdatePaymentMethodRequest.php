@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Payout;
+namespace App\Http\Requests\PaymentMethod;
 
-use App\Enums\PayoutMethodEnum;
+use App\Enums\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class StorePayoutMethodRequest extends FormRequest
+class UpdatePaymentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StorePayoutMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payout_method' => ['required', new Enum(PayoutMethodEnum::class)],
+            'payment_method' => ['required', new Enum(PaymentMethodEnum::class)],
         ];
     }
 }

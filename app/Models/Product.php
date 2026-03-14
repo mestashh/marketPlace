@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $shop_id
+ * @property mixed $productVariants
  */
 class Product extends Model
 {

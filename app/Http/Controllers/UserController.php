@@ -9,7 +9,6 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -23,7 +22,6 @@ class UserController extends Controller
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-            'device' => ['nullable', 'string', 'max:100'],
         ]);
 
         $user = User::where('email', $request->email)->first();
@@ -59,9 +57,7 @@ class UserController extends Controller
             'password' => $data['password'],
         ]);
 
-        return (new UserResource($user))
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+        return new UserResource($user);
     }
 
     public function show(User $user)

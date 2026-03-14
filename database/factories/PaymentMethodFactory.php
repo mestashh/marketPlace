@@ -18,7 +18,7 @@ class PaymentMethodFactory extends Factory
     public function definition(): array
     {
         return [
-            'payment_method' => fake()->randomElement(PaymentMethodEnum::cases())->value,
+            'payment_method' => fake()->unique()->randomElement(PaymentMethodEnum::cases())->value,
         ];
     }
 }

@@ -2,64 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PayoutMethod\storeProductVariantRequest;
+use App\Http\Requests\PayoutMethod\UpdateProductVariantRequest;
+use App\Http\Resources\ProductVariantResource;
+use App\Models\Product;
 use App\Models\ProductVariant;
-use Illuminate\Http\Request;
 
-class ProductVariantController
+class ProductVariantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return ProductVariantResource::collection($product->productVariants);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductVariantRequest $request, Product $product)
     {
-        //
+        $this->authorize('create', [ProductVariant::class, $product]);
+        $variant = $product->productVariants()->create($request->validated());
+
+        return new ProductVariantResource($variant);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(ProductVariant $productVariants)
+    public function show(ProductVariant $productVariant)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ProductVariant $productVariants)
-    {
-        //
+        return new ProductVariantResource($productVariant);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProductVariant $productVariants)
+    public function update(UpdateProductVariantRequest $request, Product $product, ProductVariant $productVariant)
     {
-        //
+        $this->authorize('update', $productVariant);
+        $productVariant->update($request->validated());
+
+        return new ProductVariantResource($productVariant);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProductVariant $productVariants)
+    public function destroy(Product $product, ProductVariant $productVariant)
     {
-        //
+        $this->authorize('delete', $productVariant);
+        $productVariant->delete();
+
+        return response()->noContent();
     }
 }

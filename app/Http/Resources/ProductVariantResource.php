@@ -5,22 +5,17 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $product
+ * @property mixed $name
+ * @property mixed $description
+ * @property mixed $price
+ * @property mixed $stock
+ * @property mixed $sku
+ * @property mixed $uuid
+ */
 class ProductVariantResource extends JsonResource
 {
-    private string $id;
-
-    private string $product_id;
-
-    private string $name;
-
-    private string $description;
-
-    private string $price;
-
-    private string $stock;
-
-    private string $sku;
-
     /**
      * Transform the resource into an array.
      *
@@ -29,8 +24,8 @@ class ProductVariantResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'product_id' => $this->product_id,
+            //'product_uuid' => $this->product->uuid,
+            'product_variant_uuid' => $this->uuid,
             'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,

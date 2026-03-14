@@ -6,7 +6,10 @@ use App\Enums\PayoutMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class StorePayoutMethodRequest extends FormRequest
+/**
+ * @property mixed $payout_method
+ */
+class UpdatePayoutMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -18,7 +18,7 @@ class PayoutMethodFactory extends Factory
     public function definition(): array
     {
         return [
-            'payout_method' => fake()->randomElement(PayoutMethodEnum::cases())->value,
+            'payout_method' => fake()->unique()->randomElement(PayoutMethodEnum::cases())->value,
         ];
     }
 }

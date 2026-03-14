@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Payment\StorePaymentMethodRequest;
-use App\Http\Requests\Payment\UpdatePaymentMethodRequest;
+use App\Http\Requests\PaymentMethod\StorePaymentMethodRequest;
+use App\Http\Requests\PaymentMethod\UpdatePaymentMethodRequest;
 use App\Http\Resources\PaymentMethodResource;
 use App\Models\PaymentMethod;
 

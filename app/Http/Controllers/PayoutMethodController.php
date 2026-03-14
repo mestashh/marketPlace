@@ -2,64 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Payout\StorePayoutMethodRequest;
+use App\Http\Requests\Payout\UpdatePayoutMethodRequest;
+use App\Http\Resources\PayoutMethodResource;
 use App\Models\PayoutMethod;
-use Illuminate\Http\Request;
 
-class PayoutMethodController
+class PayoutMethodController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(PayoutMethod::class, 'payoutMethod');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $payoutMethod = PayoutMethod::query()->paginate(20);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return PayoutMethodResource::collection($payoutMethod);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePayoutMethodRequest $request)
     {
-        //
+        $data = $request->validated();
+        $payoutMethod = PayoutMethod::create([
+            'payout_method' => $data['payout_method'],
+        ]);
+
+        return new PayoutMethodResource($payoutMethod);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(PayoutMethod $payoutMethods)
+    public function show(PayoutMethod $payoutMethod)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PayoutMethod $payoutMethods)
-    {
-        //
+        return new PayoutMethodResource($payoutMethod);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PayoutMethod $payoutMethods)
+    public function update(UpdatePayoutMethodRequest $request, PayoutMethod $payoutMethod)
     {
-        //
+        $payoutMethod = $payoutMethod->update($request->validated());
+
+        return new PayoutMethodResource($payoutMethod);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PayoutMethod $payoutMethods)
+    public function destroy(PayoutMethod $payoutMethod)
     {
-        //
+        $payoutMethod->delete();
+        return response()->noContent();
     }
 }

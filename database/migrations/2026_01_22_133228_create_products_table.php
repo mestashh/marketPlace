@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained();
             $table->uuid()->unique();
             $table->string('name', 50);
+            $table->integer('quantity');
             $table->string('description', 100)->nullable();
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->timestamps();

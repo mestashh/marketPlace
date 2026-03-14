@@ -22,6 +22,7 @@ class ProductFactory extends Factory
             'shop_id' => Shop::inRandomOrder()->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,
             'name' => fake()->word(),
+            'quantity' => fake()->biasedNumberBetween(1, 100000),
             'description' => fake()->text(50),
         ];
     }

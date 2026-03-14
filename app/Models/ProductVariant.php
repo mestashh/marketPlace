@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
+/**
+ * @property mixed $product
+ */
 class ProductVariant extends Model
 {
-    protected $fillable = ['name', 'description', 'price', 'stock', 'sku'];
+    use HasFactory;
+
+    protected $fillable = ['name', 'description', 'price', 'stock', 'sku', 'access_status', 'product_id', 'uuid'];
 
     public function cartItems(): HasMany
     {
@@ -24,5 +30,17 @@ class ProductVariant extends Model
     public function product(): BelongsTo
     {
         return $this->BelongsTo(Product::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }

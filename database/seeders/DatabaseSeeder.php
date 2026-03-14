@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 AdminSeeder::class,
                 PaymentMethodSeeder::class,
                 PayoutMethodSeeder::class,
+                ProductVariantSeeder::class,
             ]);
     }
 }

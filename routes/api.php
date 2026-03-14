@@ -4,7 +4,9 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\PayoutMethodController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
@@ -21,6 +23,7 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('address', AddressController::class);
         Route::apiResource('admin', AdminController::class);
         Route::apiResource('seller/shop', ShopController::class);
+        Route::apiResource('payoutMethod', PayoutMethodController::class);
 
         Route::patch('product/status/{product}', [ProductController::class, 'changeStatus']);
         Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
@@ -35,13 +38,23 @@ Route::prefix('v1')->group(function () {
             ->except(['index', 'show']);
         Route::apiResource('paymentMethod', PaymentMethodController::class)
             ->except(['index', 'show']);
-
+        Route::apiResource('product.variant', ProductVariantController::class)
+            ->parameters([
+                'product' => 'product',
+                'variant' => 'productVariant',
+            ])
+            ->scoped([
+                'product' => 'uuid',
+                'productVariant' => 'uuid',
+            ])
+            ->except(['show', 'index']);
     });
-
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);
     Route::apiResource('product', ProductController::class)
         ->only(['index', 'show']);
     Route::apiResource('paymentMethod', PaymentMethodController::class)
+        ->only(['index', 'show']);
+    Route::apiResource('product.variant', ProductVariantController::class)
         ->only(['index', 'show']);
 });

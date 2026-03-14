@@ -29,6 +29,11 @@ class Shop extends Model
         return $this->BelongsTo(Seller::class);
     }
 
+    public function hasProduct(): bool
+    {
+        return $this->products()->exists();
+    }
+
     public static function booted(): void
     {
         static::creating(function ($model) {
