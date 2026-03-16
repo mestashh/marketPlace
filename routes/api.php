@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PayoutMethodController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ShopController;
@@ -38,6 +39,7 @@ Route::prefix('v1')->group(function () {
             ->except(['index', 'show']);
         Route::apiResource('paymentMethod', PaymentMethodController::class)
             ->except(['index', 'show']);
+
         Route::apiResource('product.variant', ProductVariantController::class)
             ->parameters([
                 'product' => 'product',
@@ -47,7 +49,18 @@ Route::prefix('v1')->group(function () {
                 'product' => 'uuid',
                 'productVariant' => 'uuid',
             ])
-            ->except(['show', 'index']);
+            ->except(['index', 'show']);
+
+        Route::apiResource('product.image', ProductImageController::class)
+            ->parameters([
+                'product' => 'product',
+                'image' => 'productImage',
+            ])
+            ->scoped([
+                'product' => 'uuid',
+                'productImage' => 'uuid',
+            ])
+            ->except('index', 'show');
     });
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);
@@ -55,6 +68,26 @@ Route::prefix('v1')->group(function () {
         ->only(['index', 'show']);
     Route::apiResource('paymentMethod', PaymentMethodController::class)
         ->only(['index', 'show']);
+
     Route::apiResource('product.variant', ProductVariantController::class)
+        ->parameters([
+            'product' => 'product',
+            'variant' => 'productVariant',
+        ])
+        ->scoped([
+            'product' => 'uuid',
+            'productVariant' => 'uuid',
+        ])
+        ->only(['index', 'show']);
+
+    Route::apiResource('product.image', ProductImageController::class)
+        ->parameters([
+            'product' => 'product',
+            'image' => 'productImage',
+        ])
+        ->scoped([
+            'product' => 'uuid',
+            'productImage' => 'uuid',
+        ])
         ->only(['index', 'show']);
 });
