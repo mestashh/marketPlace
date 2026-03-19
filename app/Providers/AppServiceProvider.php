@@ -10,9 +10,6 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected array $policies = [
-        \App\Models\User::class => \App\Policies\UserPolicy::class,
-    ];
     /**
      * Register any application services.
      */

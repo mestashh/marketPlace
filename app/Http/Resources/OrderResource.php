@@ -2,17 +2,19 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ShopOrder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $uuid
+ * @property mixed $address
+ * @property mixed $status
+ * @property mixed $total_price
+ * @property mixed $shopOrders
+ */
 class OrderResource extends JsonResource
 {
-    private string $id;
-    private string $user_id;
-    private string $address_id;
-    private string $status;
-    private string $total_price;
-
 
     /**
      * Transform the resource into an array.
@@ -21,12 +23,14 @@ class OrderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $address = $this->address->country.$this->address->city.$this->address->street.$this->address->house;
+
         return [
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'address_id' => $this->address_id,
+            'uuid' => $this->uuid,
+            'address' => $address,
             'status' => $this->status,
             'total_price' => $this->total_price,
+            'shop_order' => ShopOrderResource::collection($this->shopOrders),
         ];
     }
 }

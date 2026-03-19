@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PayoutMethodController;
 use App\Http\Controllers\ProductController;
@@ -30,6 +33,10 @@ Route::prefix('v1')->group(function () {
         Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
         Route::patch('shop/status/{shop}', [ShopController::class, 'changeStatus']);
         Route::patch('seller/status/{seller}', [SellerController::class, 'changeStatus']);
+
+        Route::get('cart', [CartController::class, 'show']);
+        Route::apiResource('cart/items', CartItemController::class)
+            ->except(['show', 'index']);
 
         Route::apiResource('seller', SellerController::class)
             ->except('index');
@@ -61,6 +68,8 @@ Route::prefix('v1')->group(function () {
                 'productImage' => 'uuid',
             ])
             ->except('index', 'show');
+
+        Route::apiResource('me/orders', OrderController::class);
     });
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);

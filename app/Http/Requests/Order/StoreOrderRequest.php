@@ -11,11 +11,6 @@ class StoreOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user('web');
-        $cart = $this->route('cart');
-        if (! $user || ! $cart || ($user->id !== $cart->user_id)) {
-            return false;
-        }
         return true;
     }
 

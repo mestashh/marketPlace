@@ -2,20 +2,17 @@
 
 namespace App\Http\Requests\Order;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
-class CancelOrderRequest extends FormRequest
+class UpdateOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        $user = $this->user('web');
-        $order = $this->route('order');
-        if (! $user || ! $order || ($user->id !== $order->user_id)) {
-            return false;
-        }
         return true;
     }
 
@@ -27,7 +24,7 @@ class CancelOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'address_id' => ['sometimes', 'integer', 'exists:addresses,id'],
         ];
     }
 }

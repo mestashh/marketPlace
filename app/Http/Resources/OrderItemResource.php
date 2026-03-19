@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property mixed $uuid
- * @property mixed $user
- * @property mixed $cartItems
+ * @property mixed $productVariant
+ * @property mixed $quantity
+ * @property mixed $price_at_purchase
  */
-class CartResource extends JsonResource
+class OrderItemResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,9 +20,9 @@ class CartResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'uuid' => $this->uuid,
-            'user_uuid' => $this->user->uuid,
-            'items' => CartItemResource::collection($this->cartItems),
+            'product_variant_uuid' => $this->productVariant->uuid,
+            'quantity' => $this->quantity,
+            'price_at_purchase' => $this->price_at_purchase,
         ];
     }
 }

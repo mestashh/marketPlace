@@ -7,10 +7,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @property mixed $uuid
- * @property mixed $user
- * @property mixed $cartItems
+ * @property mixed $quantity
+ * @property mixed $price
+ * @property mixed $productVariant
  */
-class CartResource extends JsonResource
+class CartItemResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -21,8 +22,10 @@ class CartResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'user_uuid' => $this->user->uuid,
-            'items' => CartItemResource::collection($this->cartItems),
+            'product_variant_uuid' => $this->productVariant->uuid,
+            'quantity' => $this->quantity,
+            'price' => $this->price,
+            'images' => ProductImageResource::collection($this->productVariant->product->productImages),
         ];
     }
 }

@@ -20,7 +20,7 @@ class ProductImageFactory extends Factory
         return [
             'product_id' => Product::inRandomOrder()->first()->id,
             'is_main' => false,
-            'path' => fake()->word,
+            'path' => fake()->unique()->word,
             'position' => fake()->unique()->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
         ];
     }

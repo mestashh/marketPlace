@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->foreignId('address_id')->constrained()->restrictOnDelete();
-            $table->enum('status', ['completed', 'created', 'paid', 'in_progress', 'canceled'])->default('created');
+            $table->enum('status', OrderStatusEnum::cases())->default(OrderStatusEnum::CREATED->value);
             $table->integer('total_price');
             $table->timestamps();
         });

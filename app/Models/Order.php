@@ -2,14 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
+/**
+ * @property mixed $status
+ * @property mixed $user_id
+ */
 class Order extends Model
 {
-    protected $fillable = ['status', 'total_price'];
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'address_id', 'status', 'total_price'];
 
     public function user(): BelongsTo
     {
@@ -29,5 +36,17 @@ class Order extends Model
     public function shopOrders(): HasMany
     {
         return $this->HasMany(ShopOrder::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }

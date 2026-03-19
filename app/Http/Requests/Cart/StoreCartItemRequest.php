@@ -11,14 +11,6 @@ class StoreCartItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = $this->user('web');
-        if (! $user) {
-            return false;
-        }
-        $cart = $this->route('cart');
-        if ((int) $user->id !== $cart->user_id) {
-            return false;
-        }
         return true;
     }
 
@@ -30,8 +22,8 @@ class StoreCartItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_variant_id' => ['required', 'integer', 'exists:product_variant,id'],
-            'quantity' => ['required', 'integer'],
+            'quantity' => ['required', 'integer', 'min:1', 'max:1000'],
+            'product_variant_id' => ['required', 'integer', 'exists:product_variants,id'],
         ];
     }
 }

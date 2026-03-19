@@ -2,23 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
+use App\Http\Resources\CartResource;
 use Illuminate\Http\Request;
 
-class CartsController
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
         //
     }
@@ -34,23 +26,18 @@ class CartsController
     /**
      * Display the specified resource.
      */
-    public function show(Cart $carts)
+    public function show(Request $request)
     {
-        //
-    }
+        $cart = $request->user()->cart;
+        $this->authorize('view', $cart);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart $carts)
-    {
-        //
+        return new CartResource($cart);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cart $carts)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +45,7 @@ class CartsController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cart $carts)
+    public function destroy(string $id)
     {
         //
     }
