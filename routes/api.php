@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\SellerPayoutMethodController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,10 +25,11 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);
+        Route::apiResource('me/orders', OrderController::class);
         Route::apiResource('address', AddressController::class);
         Route::apiResource('admin', AdminController::class);
         Route::apiResource('seller/shop', ShopController::class);
-        Route::apiResource('payoutMethod', PayoutMethodController::class);
+        Route::apiResource('marketplace/payoutMethod', PayoutMethodController::class);
 
         Route::patch('product/status/{product}', [ProductController::class, 'changeStatus']);
         Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
@@ -69,7 +71,10 @@ Route::prefix('v1')->group(function () {
             ])
             ->except('index', 'show');
 
-        Route::apiResource('me/orders', OrderController::class);
+        Route::apiResource('me/payoutMethods', SellerPayoutMethodController::class)
+            ->parameters([
+                'payoutMethods' => 'sellerPayoutMethod',
+            ]);
     });
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);

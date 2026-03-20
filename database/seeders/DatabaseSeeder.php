@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
                 OrderSeeder::class,
                 ShopOrderSeeder::class,
                 OrderItemSeeder::class,
+                SellerPayoutMethodSeeder::class,
             ]);
     }
 }
