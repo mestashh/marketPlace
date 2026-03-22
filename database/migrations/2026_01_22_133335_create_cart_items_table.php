@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('price');
             $table->unique(['cart_id', 'product_variant_id']);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $status
  * @property mixed $user_id
+ * @property mixed $id
+ * @property mixed $total_price
  */
 class Order extends Model
 {
@@ -28,7 +30,7 @@ class Order extends Model
         return $this->BelongsTo(Address::class);
     }
 
-    public function payment(): HasMany
+    public function payments(): HasMany
     {
         return $this->HasMany(Payment::class);
     }

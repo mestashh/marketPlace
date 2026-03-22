@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Enums\PaymentStatusEnum;
+use App\Http\Requests\Payment\StorePaymentRequest;
+use App\Http\Resources\PaymentResource;
+use App\Models\Order;
+use App\Models\Payment;
+use Illuminate\Http\Request;
+
+class PaymentController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $this->authorize(Payment::class, 'payment');
+        $user = $request->user();
+        $payment = Payment::where('user_id', $user->id)->get();
+
+        return PaymentResource::collection($payment);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StorePaymentRequest $request, Order $order)
+    {
+        $this->authorize('create', [Payment::class, $order]);
+        $user = $request->user();
+        $data = $request->validated();
+        $payment = Payment::create([
+            'order_id' => $order->id,
+            'user_id' => $user->id,
+            'payment_method_id' => $data['payment_method_id'],
+            'status' => PaymentStatusEnum::PENDING->value,
+            'amount' => $order->total_price,
+        ]);
+
+        return new PaymentResource($payment);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Order $order, Payment $payment)
+    {
+        $this->authorize('view', [Payment::class, $payment]);
+        return new PaymentResource($payment);
+    }
+}

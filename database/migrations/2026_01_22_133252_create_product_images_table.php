@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('is_main');
             $table->integer('position')->unique();
             $table->string('path', 255)->unique();
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

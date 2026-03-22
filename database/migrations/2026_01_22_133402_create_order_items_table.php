@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('price_at_purchase');
             $table->unique(['shop_order_id', 'product_variant_id']);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

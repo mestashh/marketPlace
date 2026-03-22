@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', PayoutStatusEnum::cases())->default(PayoutStatusEnum::PENDING->value);
             $table->json('details');
             $table->unique(['seller_id', 'payout_method_id']);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

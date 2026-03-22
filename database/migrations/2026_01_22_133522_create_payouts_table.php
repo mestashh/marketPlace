@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('seller_payout_method_id')->constrained()->restrictOnDelete();
             $table->enum('status', ['planned', 'processing', 'paid', 'failed']);
             $table->integer('amount');
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

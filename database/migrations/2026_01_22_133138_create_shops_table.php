@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('description', 255);
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

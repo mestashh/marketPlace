@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
             $table->enum('payment_method', PaymentMethodEnum::cases())->unique();
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

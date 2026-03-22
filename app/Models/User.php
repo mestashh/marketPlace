@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->HasMany(Order::class);
     }
 
+    public function hasOrders(): bool
+    {
+        return $this->orders()->exists();
+    }
+
     public function reviews(): HasMany
     {
         return $this->HasMany(Review::class);

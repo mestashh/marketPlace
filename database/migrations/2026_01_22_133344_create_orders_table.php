@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('address_id')->constrained()->restrictOnDelete();
             $table->enum('status', OrderStatusEnum::cases())->default(OrderStatusEnum::CREATED->value);
             $table->integer('total_price');
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

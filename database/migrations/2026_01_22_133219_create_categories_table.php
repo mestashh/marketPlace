@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('categories');
             $table->uuid()->unique();
             $table->string('name', 30);
-            $table->timestamps();
+            $table->timestampsTZ();
             $table->unique(['parent_id', 'name']);
         });
     }

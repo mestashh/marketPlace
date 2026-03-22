@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->string('sku', 100)->nullable()->unique();
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

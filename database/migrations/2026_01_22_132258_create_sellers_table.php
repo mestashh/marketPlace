@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('withdrawable_balance')->default(0);
             $table->string('TIN', 100)->unique();
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

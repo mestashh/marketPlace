@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('description', 100)->nullable();
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

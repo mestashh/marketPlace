@@ -18,18 +18,18 @@ return new class extends Migration
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('email', 300)->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestampTZ('email_verified_at')->nullable();
             $table->string('phone', 50)->unique();
             $table->string('password', 255);
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::ACCESS->value);
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestampsTZ();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->timestampTZ('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {

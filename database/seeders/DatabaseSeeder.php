@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
                 ShopOrderSeeder::class,
                 OrderItemSeeder::class,
                 SellerPayoutMethodSeeder::class,
+                PaymentSeeder::class,
+                ReviewSeeder::class,
             ]);
     }
 }

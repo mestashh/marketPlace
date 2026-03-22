@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -14,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->unique();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->unsignedSmallInteger('rating');
             $table->text('text');
+            $table->enum('status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->unique(['user_id', 'product_id']);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
-        DB::statement('
-    ALTER TABLE reviews
-    ADD CONSTRAINT reviews_rating_check
-    CHECK (rating BETWEEN 1 AND 5)
-');
     }
 
     /**
@@ -33,10 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::statement('
-            ALTER TABLE reviews
-            DROP CONSTRAINT IF EXISTS reviews_rating_check
-        ');
         Schema::dropIfExists('reviews');
     }
 };

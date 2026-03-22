@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('house', 100);
             $table->string('phone', 20);
             $table->string('description', 100);
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Review;
+namespace App\Http\Requests\Payment;
 
+use App\Enums\PaymentMethodEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 
-class UpdateReviewRequest extends FormRequest
+class StorePaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,7 @@ class UpdateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'rating' => ['sometimes', 'integer', 'min:1', 'max:5'],
-            'text' => ['sometimes', 'string'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
         ];
     }
 }

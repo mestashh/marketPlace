@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->foreign('admin_id')->references('id')->on('admins')->cascadeOnUpdate()->nullOnDelete();
             $table->enum('status', ['open', 'waiting_admin', 'closed'])->default('open');
-            $table->timestamps();
+            $table->timestampsTZ();
         });
     }
 

@@ -6,11 +6,13 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PayoutMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ProductVariantController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SellerPayoutMethodController;
 use App\Http\Controllers\ShopController;
@@ -59,7 +61,6 @@ Route::prefix('v1')->group(function () {
                 'productVariant' => 'uuid',
             ])
             ->except(['index', 'show']);
-
         Route::apiResource('product.image', ProductImageController::class)
             ->parameters([
                 'product' => 'product',
@@ -70,12 +71,33 @@ Route::prefix('v1')->group(function () {
                 'productImage' => 'uuid',
             ])
             ->except('index', 'show');
+        Route::apiResource('me/orders.payment', PaymentController::class)
+            ->parameters([
+                'orders' => 'order',
+                'payment' => 'payment',
+            ])
+            ->scoped([
+                'orders' => 'uuid',
+                'payment' => 'uuid',
+            ])
+            ->except('index');
+        Route::get('me/payment', [PaymentController::class, 'index']);
 
         Route::apiResource('me/payoutMethods', SellerPayoutMethodController::class)
             ->parameters([
                 'payoutMethods' => 'sellerPayoutMethod',
             ]);
+        Route::apiResource('product.review', ReviewController::class)
+            ->parameters([
+                'product' => 'product',
+                'review' => 'review',
+            ])->scoped([
+                'product' => 'uuid',
+                'review' => 'uuid',
+            ]);
     });
+
+
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);
     Route::apiResource('product', ProductController::class)

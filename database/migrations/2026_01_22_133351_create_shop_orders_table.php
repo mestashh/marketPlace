@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('shop_id')->constrained()->cascadeOnDelete();
             $table->enum('status', OrderStatusEnum::cases())->default(OrderStatusEnum::CREATED->value);
             $table->integer('subtotal_price');
-            $table->timestamps();
+            $table->timestampsTZ();
             $table->unique(['order_id', 'shop_id']);
         });
     }
