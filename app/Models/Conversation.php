@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
+/**
+ * @property mixed $user_id
+ * @property mixed $seller_id
+ * @property mixed $status
+ * @property mixed $admin_id
+ * @property mixed $id
+ */
 class Conversation extends Model
 {
+    use HasFactory;
     protected $fillable = ['status', 'shop_order_id', 'user_id', 'seller_id'];
 
-    public function shop_order(): BelongsTo
+    public function shopOrder(): BelongsTo
     {
         return $this->BelongsTo(ShopOrder::class);
     }
@@ -33,5 +43,17 @@ class Conversation extends Model
     public function messages(): HasMany
     {
         return $this->HasMany(Message::class);
+    }
+
+    public static function booted(): void
+    {
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }

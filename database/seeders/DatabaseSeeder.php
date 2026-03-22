@@ -32,6 +32,8 @@ class DatabaseSeeder extends Seeder
                 SellerPayoutMethodSeeder::class,
                 PaymentSeeder::class,
                 ReviewSeeder::class,
+                ConversationSeeder::class,
+                MessageSeeder::class,
             ]);
     }
 }

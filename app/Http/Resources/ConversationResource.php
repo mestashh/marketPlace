@@ -5,15 +5,16 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property mixed $uuid
+ * @property mixed $shopOrder
+ * @property mixed $user
+ * @property mixed $seller
+ * @property mixed $admin
+ * @property mixed $status
+ */
 class ConversationResource extends JsonResource
 {
-    private string $id;
-    private string $shop_order_id;
-    private string $user_id;
-    private string $seller_id;
-    private string $admin_id;
-    private string $status;
-
     /**
      * Transform the resource into an array.
      *
@@ -22,11 +23,12 @@ class ConversationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'shop_order_id' => $this->shop_order_id,
-            'user_id' => $this->user_id,
-            'seller_id' => $this->seller_id,
-            'admin_id' => $this->admin_id,
+            'uuid' => $this->uuid,
+            'order_uuid' => $this->shopOrder->order->uuid,
+            'shop_order_id' => $this->shopOrder->id,
+            'user_uuid' => $this->user->id,
+            'seller_uuid' => $this->seller->uuid,
+            'admin_uuid' => $this->admin?->uuid,
             'status' => $this->status,
         ];
     }

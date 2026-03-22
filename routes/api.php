@@ -5,6 +5,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMethodController;
@@ -95,9 +97,29 @@ Route::prefix('v1')->group(function () {
                 'product' => 'uuid',
                 'review' => 'uuid',
             ]);
+
+        Route::get('me/conversations', [ConversationController::class, 'index']);
+        Route::get('conversations', [ConversationController::class, 'index']);
+        Route::post('me/conversations/{conversation}/close', [ConversationController::class, 'close']);
+        Route::post('me/conversations/{conversation}/callAdmin', [ConversationController::class, 'callAdmin']);
+        Route::apiResource('me/orders.conversations', ConversationController::class)
+            ->parameters([
+                'orders' => 'order',
+                'conversations' => 'conversation',
+            ])
+            ->scoped([
+                'orders' => 'uuid',
+                'conversations' => 'uuid',
+            ])
+            ->except(['index', 'update', 'destroy']);
+
+        Route::get('me/conversations/{conversation}/messages/', [MessageController::class, 'index']);
+        Route::post('me/conversations/{conversation}/messages/', [MessageController::class, 'store']);
+        Route::get('conversations/{conversation}/messages/', [MessageController::class, 'index']);
+        Route::post('conversations/{conversation}/messages/', [MessageController::class, 'store']);
     });
 
-
+    // NO AUTH ------------------------
     Route::apiResource('category', CategoryController::class)
         ->only(['index', 'show']);
     Route::apiResource('product', ProductController::class)
