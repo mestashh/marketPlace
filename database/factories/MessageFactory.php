@@ -17,11 +17,7 @@ class MessageFactory extends Factory
      */
     public function definition(): array
     {
-        $conversation = Conversation::inRandomOrder()->first();
-
         return [
-            'conversation_id' => $conversation->id,
-            'user_id' => fake()->randomElement([$conversation->user_id, $conversation->seller_id]),
             'text' => fake()->word(),
         ];
     }

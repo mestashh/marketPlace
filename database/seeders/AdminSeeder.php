@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdminRoleEnum;
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -13,6 +13,10 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        Admin::create([
+            'user_id' => 2,
+            'role' => AdminRoleEnum::SUPPORT->value,
+        ]);
         Admin::factory(5)->create();
     }
 }

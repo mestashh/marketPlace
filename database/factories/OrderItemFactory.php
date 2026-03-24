@@ -19,10 +19,9 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'shop_order_id' => ShopOrder::factory()->create(),
             'product_variant_id' => ProductVariant::inRandomOrder()->first()->id,
-            'quantity' => fake()->randomElement([10, 100, 1000, 1500, 2000, 999]),
-            'price_at_purchase' => fake()->randomElement([599, 799, 999, 1500, 1999]),
+            'quantity' => fake()->biasedNumberBetween(10, 1000),
+            'price_at_purchase' => fake()->biasedNumberBetween(10, 10000),
         ];
     }
 }

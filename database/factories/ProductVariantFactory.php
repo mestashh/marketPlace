@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class ProductVariantFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::inRandomOrder()->first()->id,
+            'access_status' => fake()->randomElement(StatusEnum::cases()),
             'name' => fake()->word(),
             'description' => fake()->text(50),
             'price' => fake()->biasedNumberBetween(100, 100000),

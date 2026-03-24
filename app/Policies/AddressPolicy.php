@@ -10,28 +10,28 @@ class AddressPolicy
     /**
      * Create a new policy instance.
      */
-    public function viewAny(User $authUser): bool
+    public function viewAny(User $user): bool
     {
-        return $authUser->isAdmin();
+        return $user->isAdmin();
     }
 
-    public function view(User $authUser, Address $address): bool
+    public function view(User $user, Address $address): bool
     {
-        return $authUser->isAdmin() || $authUser->id === $address->user_id;
+        return $user->isAdmin() || $user->id === $address->user_id;
     }
 
-    public function create(User $authUser): bool
+    public function create(User $user): bool
     {
         return true;
     }
 
-    public function update(User $authUser, Address $address): bool
+    public function update(User $user, Address $address): bool
     {
-        return $authUser->isAdmin() || $authUser->id === $address->user_id;
+        return $user->isAdmin() || $user->id === $address->user_id;
     }
 
-    public function delete(User $authUser, Address $address): bool
+    public function delete(User $user, Address $address): bool
     {
-        return $authUser->isAdmin() || $address->user_id === $authUser->id;
+        return $user->isAdmin() || $address->user_id === $user->id;
     }
 }

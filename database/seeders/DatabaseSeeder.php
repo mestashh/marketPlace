@@ -15,25 +15,17 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 UserSeeder::class,
-                AddressSeeder::class,
-                SellerSeeder::class,
-                ShopSeeder::class,
+                PayoutMethodSeeder::class,
                 CategorySeeder::class,
-                ProductSeeder::class,
+                SellerSeeder::class,
+                OrderSeeder::class,
                 AdminSeeder::class,
                 PaymentMethodSeeder::class,
-                PayoutMethodSeeder::class,
-                ProductVariantSeeder::class,
-                ProductImageSeeder::class,
                 CartItemSeeder::class,
-                OrderSeeder::class,
-                ShopOrderSeeder::class,
-                OrderItemSeeder::class,
-                SellerPayoutMethodSeeder::class,
                 PaymentSeeder::class,
                 ReviewSeeder::class,
                 ConversationSeeder::class,
-                MessageSeeder::class,
+                PayoutSeeder::class,
             ]);
     }
 }

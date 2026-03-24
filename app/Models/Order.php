@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
  * @property mixed $user_id
  * @property mixed $id
  * @property mixed $total_price
+ * @method static inRandomOrder()
  */
 class Order extends Model
 {

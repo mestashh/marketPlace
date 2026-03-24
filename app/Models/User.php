@@ -13,6 +13,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed $id
  * @property mixed $admin
  * @property mixed $seller
+ * @method static inRandomOrder()
+ * @method static where(string $string, int $int)
+ * @method static find(int $int)
  */
 class User extends Authenticatable
 {

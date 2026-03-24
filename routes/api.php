@@ -10,6 +10,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\PayoutController;
 use App\Http\Controllers\PayoutMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
@@ -46,6 +47,8 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('seller', SellerController::class)
             ->except('index');
+        Route::apiResource('payouts', PayoutController::class)
+            ->except(['update', 'delete']);
         Route::apiResource('category', CategoryController::class)
             ->except(['index', 'show']);
         Route::apiResource('product', ProductController::class)

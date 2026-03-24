@@ -24,8 +24,8 @@ class OrderFactory extends Factory
         return [
             'user_id' => $user->id,
             'address_id' => $address,
-            'total_price' => fake()->randomElement([1000, 12000, 15000, 7000, 6500, 6900, 9999]),
-            'status' => fake()->randomElement(OrderStatusEnum::cases()),
+            'total_price' => fake()->biasedNumberBetween(100, 10000),
+            'status' => fake()->randomElement(OrderStatusEnum::cases())->value,
         ];
     }
 }

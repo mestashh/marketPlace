@@ -21,8 +21,8 @@ class CartItemFactory extends Factory
         return [
             'cart_id' => Cart::inRandomOrder()->first()->id,
             'product_variant_id' => ProductVariant::inRandomOrder()->first()->id,
-            'quantity' => fake()->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9]),
-            'price' => fake()->randomElement([100, 145, 453, 5678, 140, 4670, 999]),
+            'quantity' => fake()->biasedNumberBetween(1, 10),
+            'price' => fake()->biasedNumberBetween(100, 10000),
         ];
     }
 }

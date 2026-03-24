@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,10 +19,10 @@ class ProductImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::inRandomOrder()->first()->id,
-            'is_main' => false,
-            'path' => fake()->unique()->word,
-            'position' => fake()->unique()->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+            'access_status' => fake()->randomElement(StatusEnum::cases()),
+            'is_main' => fake()->randomElement([true, false]),
+            'path' => fake()->unique()->uuid,
+            'position' => fake()->biasedNumberBetween(1, 10),
         ];
     }
 }

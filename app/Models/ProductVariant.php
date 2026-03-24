@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $product
+ * @method static inRandomOrder()
  */
 class ProductVariant extends Model
 {

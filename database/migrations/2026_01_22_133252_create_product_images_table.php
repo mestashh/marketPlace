@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->boolean('is_main');
-            $table->integer('position')->unique();
+            $table->integer('position');
             $table->string('path', 255)->unique();
             $table->timestampsTZ();
         });

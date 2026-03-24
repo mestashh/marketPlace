@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
  * @property mixed $shop_id
  * @property mixed $productVariants
  * @property mixed $id
+ * @method static inRandomOrder()
  */
 class Product extends Model
 {

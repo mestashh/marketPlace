@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property $user_id
  * @property $id
+ * @method static inRandomOrder()
  */
 class ShopOrder extends Model
 {
@@ -28,11 +29,6 @@ class ShopOrder extends Model
     public function orderItems(): HasMany
     {
         return $this->HasMany(OrderItem::class);
-    }
-
-    public function payouts(): HasMany
-    {
-        return $this->HasMany(Payout::class);
     }
 
     public function order(): BelongsTo

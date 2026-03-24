@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use App\Models\Seller;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class ShopFactory extends Factory
     public function definition(): array
     {
         return [
+            'access_status' => fake()->randomElement(StatusEnum::cases()),
             'name' => fake()->company(),
             'description' => fake()->text(50),
         ];

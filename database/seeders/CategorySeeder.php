@@ -12,13 +12,19 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $parents = Category::factory(10)->create();
+        $category = Category::create([
+            'name' => 'Toys',
+            'parent_id' => null,
+        ]);
 
-        foreach ($parents as $parent) {
-            Category::factory(3)->create([
-                'parent_id' => $parent->id,
-            ]);
-        }
-        Category::factory(10)->create();
+        Category::create([
+            'name' => 'Cars',
+            'parent_id' => $category->id,
+        ]);
+
+        Category::create([
+            'name' => 'Animals',
+            'parent_id' => $category->id,
+        ]);
     }
 }

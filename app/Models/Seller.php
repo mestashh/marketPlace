@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
+ * @method static inRandomOrder()
  */
 class Seller extends Authenticatable
 {
@@ -43,6 +44,11 @@ class Seller extends Authenticatable
         return $this->shop()->exists();
     }
 
+    public function payouts(): HasMany
+    {
+        return $this->hasMany(Payout::class);
+    }
+
     public static function booted(): void
     {
         static::creating(function ($model) {
@@ -50,7 +56,7 @@ class Seller extends Authenticatable
         });
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }

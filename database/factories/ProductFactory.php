@@ -19,7 +19,6 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'shop_id' => Shop::inRandomOrder()->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,
             'name' => fake()->word(),
             'quantity' => fake()->biasedNumberBetween(1, 100000),

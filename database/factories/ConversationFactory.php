@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\AdminRoleEnum;
 use App\Enums\ConversationStatusEnum;
 use App\Models\Admin;
-use App\Models\Seller;
 use App\Models\ShopOrder;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,11 +21,15 @@ class ConversationFactory extends Factory
      */
     public function definition(): array
     {
+        $shopOrder = ShopOrder::inRandomOrder()->first();
+        $user = $shopOrder->order->user;
+        $seller = $shopOrder->shop->seller;
+
         return [
-            'shop_order_id' => ShopOrder::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
-            'seller_id' => Seller::inRandomOrder()->first()->id,
-            'admin_id' => fake()->randomElement([null, Admin::inRandomOrder()->first()->id]),
+            'shop_order_id' => $shopOrder->id,
+            'user_id' => $user->id,
+            'seller_id' => $seller->id,
+            'admin_id' => fake()->randomElement([null, Admin::where('role', AdminRoleEnum::SUPPORT->value)->first()->id]),
             'status' => fake()->randomElement(ConversationStatusEnum::cases()),
         ];
     }

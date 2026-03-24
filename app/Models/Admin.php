@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $role
+ * @method static where(string $string, string $value)
  */
 class Admin extends Authenticatable
 {

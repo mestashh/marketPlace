@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\StatusEnum;
+use App\Models\Product;
 use App\Models\Review;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ReviewSeeder extends Seeder
@@ -13,6 +15,15 @@ class ReviewSeeder extends Seeder
      */
     public function run(): void
     {
-        Review::factory(10)->create();
+        $user = User::find(5);
+        $products = Product::all();
+        foreach ($products as $product) {
+            Review::factory()
+                ->count(1)
+                ->for($user)
+                ->for($product)
+                ->create();
+        }
+
     }
 }

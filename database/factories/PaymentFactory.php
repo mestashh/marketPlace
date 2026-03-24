@@ -24,8 +24,8 @@ class PaymentFactory extends Factory
             'order_id' => Order::inRandomOrder()->first()->id,
             'payment_method_id' => PaymentMethod::inRandomOrder()->first()->id,
             'user_id' => User::inRandomOrder()->first()->id,
-            'status' => fake()->randomElement(PaymentStatusEnum::cases()),
-            'amount' => fake()->randomDigitNotNull(),
+            'status' => fake()->randomElement(PaymentStatusEnum::cases())->value,
+            'amount' => fake()->biasedNumberBetween(100, 10000),
         ];
     }
 }

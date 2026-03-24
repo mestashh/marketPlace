@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Enums\PayoutStatusEnum;
 use App\Models\PayoutMethod;
-use App\Models\Seller;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +19,8 @@ class SellerPayoutMethodFactory extends Factory
     public function definition(): array
     {
         $method = PayoutMethod::inRandomOrder()->first();
-        $seller = Seller::inRandomOrder()->first()->id;
 
         return [
-            'seller_id' => $seller,
             'payout_method_id' => $method->id,
             'status' => fake()->randomElement(PayoutStatusEnum::cases())->value,
             'details' => $this->detailsByMethod($method->payout_method),
@@ -46,5 +43,13 @@ class SellerPayoutMethodFactory extends Factory
                 'value' => fake()->word(),
             ]
         };
+    }
+
+    public function forMethod(PayoutMethod $method): SellerPayoutMethodFactory|Factory
+    {
+        return $this->state([
+            'payout_method_id' => $method->id,
+            'details' => $this->detailsByMethod($method->payout_method),
+        ]);
     }
 }

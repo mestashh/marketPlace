@@ -36,11 +36,6 @@ class SellerPayoutMethod extends Model
         return $this->BelongsTo(PayoutMethod::class);
     }
 
-    public function payouts(): HasMany
-    {
-        return $this->HasMany(Payout::class);
-    }
-
     public static function booted(): void
     {
         static::creating(function ($model) {

@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
+/**
+ * @method static inRandomOrder()
+ * @method static take(int $int)
+ * @method static find(int $int)
+ */
 class Shop extends Model
 {
     use hasFactory;

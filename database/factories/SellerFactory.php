@@ -17,10 +17,11 @@ class SellerFactory extends Factory
      */
     public function definition(): array
     {
+        $balance = fake()->biasedNumberBetween(5000, 10000);
         return [
             'user_id' => User::factory(),
-            'balance' => 0,
-            'withdrawable_balance' => 0,
+            'balance' => $balance,
+            'withdrawable_balance' => $balance - fake()->biasedNumberBetween(1000, 5000),
             'TIN' => fake()->unique()->numerify('#########'),
         ];
     }

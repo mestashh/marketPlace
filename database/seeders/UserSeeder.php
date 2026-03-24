@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\AdminRoleEnum;
+use App\Models\Address;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -27,6 +28,6 @@ class UserSeeder extends Seeder
                 'user_id' => $admin->id,
                 'role' => AdminRoleEnum::SUPER_ADMIN->value,
             ]);
-        User::factory(10)->create();
+        User::factory(10)->has(Address::factory()->count(2))->create();
     }
 }
