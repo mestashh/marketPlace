@@ -7,19 +7,21 @@ use App\Http\Requests\Shop\StoreShopRequest;
 use App\Http\Requests\Shop\UpdateShopRequest;
 use App\Http\Resources\ShopResource;
 use App\Models\Shop;
+use App\Services\ShopService;
 
 class ShopController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        private readonly ShopService $shopService,
+    ) {
         $this->authorizeResource(Shop::class, 'shop');
     }
 
     public function index()
     {
-        $shop = Shop::query()->paginate(20);
+        $shops = Shop::query()->paginate(20);
 
-        return ShopResource::collection($shop);
+        return ShopResource::collection($shops);
     }
 
     public function show(Shop $shop)
@@ -29,17 +31,9 @@ class ShopController extends Controller
 
     public function store(StoreShopRequest $request)
     {
-        $data = $request->validated();
+        $shop = $this->shopService->create($request->user(), $request->validated());
 
-        $shop = Shop::create([
-            'name' => $data['name'],
-            'seller_id' => $request->user()->seller->id,
-            'description' => $data['description'],
-        ]);
-
-        return new ShopResource($shop)
-            ->response()
-            ->setStatusCode(201);
+        return new ShopResource($shop);
     }
 
     public function update(UpdateShopRequest $request, Shop $shop)

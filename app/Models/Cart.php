@@ -9,12 +9,13 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
+ * @property mixed $cartItems
  * @method static inRandomOrder()
  * @method static find(int $int)
  */
 class Cart extends Model
 {
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'product_variant_id', 'quantity', 'price'];
 
     public function cartItems(): HasMany
     {

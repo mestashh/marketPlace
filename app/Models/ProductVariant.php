@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $product
  * @method static inRandomOrder()
+ * @method static findOrFail(mixed $product_variant_id)
  */
 class ProductVariant extends Model
 {

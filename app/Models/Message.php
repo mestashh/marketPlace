@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 
+/**
+ * @method static where(string $string, mixed $id)
+ * @method static create(array $array)
+ */
 class Message extends Model
 {
     use HasFactory;

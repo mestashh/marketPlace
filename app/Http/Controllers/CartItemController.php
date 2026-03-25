@@ -7,20 +7,13 @@ use App\Http\Requests\Cart\UpdateCartItemRequest;
 use App\Http\Resources\CartItemResource;
 use App\Models\CartItem;
 use App\Models\ProductVariant;
+use App\Services\CartItemService;
 
 class CartItemController extends Controller
 {
-    public function __construct()
+    public function __construct(private readonly CartItemService $cartItemService)
     {
         $this->authorizeResource(CartItem::class, 'item');
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -28,16 +21,7 @@ class CartItemController extends Controller
      */
     public function store(StoreCartItemRequest $request)
     {
-        $cart = $request->user()->cart;
-        $data = $request->validated();
-
-        $product = ProductVariant::findOrFail($data['product_variant_id']);
-
-        $item = $cart->cartItems()->create([
-            'product_variant_id' => $product->id,
-            'quantity' => $data['quantity'],
-            'price' => $product->price,
-        ]);
+        $item = $this->cartItemService->store($request->user()->cart, $request->validated());
 
         return new CartItemResource($item);
     }

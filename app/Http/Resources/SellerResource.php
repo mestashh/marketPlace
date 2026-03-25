@@ -22,7 +22,7 @@ class SellerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->uuid,
+            'uuid' => $this->uuid,
             'balance' => $this->balance,
             'withdrawable_balance' => $this->withdrawable_balance,
             'TIN' => $this->TIN,

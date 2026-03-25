@@ -8,23 +8,20 @@ use App\Http\Resources\ConversationResource;
 use App\Models\Conversation;
 use App\Models\Order;
 use App\Models\ShopOrder;
+use App\Services\ConversationService;
 use Symfony\Component\HttpFoundation\Request;
 
 class ConversationController extends Controller
 {
+    public function __construct(private readonly ConversationService $conversationService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $this->authorize('viewAny', Conversation::class);
-        if ($request->user()->isAdmin()) {
-            $conversation = Conversation::query()->paginate(20);
-        } elseif ($request->user()->isSeller()) {
-            $conversation = Conversation::where('seller_id', $request->user()->seller->id)->get();
-        } else {
-            $conversation = Conversation::where('user_id', $request->user()->id)->get();
-        }
+        $conversation = $this->conversationService->index($request->user());
 
         return ConversationResource::collection($conversation);
     }
@@ -35,16 +32,7 @@ class ConversationController extends Controller
     public function store(StoreConversationRequest $request, Order $order)
     {
         $this->authorize('create', [Conversation::class, $order]);
-        $data = $request->validated();
-        $user = $request->user();
-        $shopOrder = ShopOrder::findOrFail($data['shop_order_id']);
-        $seller = $shopOrder->shop->seller->id;
-        $conversation = Conversation::create([
-            'shop_order_id' => $data['shop_order_id'],
-            'user_id' => $user->id,
-            'seller_id' => $seller,
-            'status' => ConversationStatusEnum::OPEN->value,
-        ]);
+        $conversation = $this->conversationService->store($request->user(), $request->validated());
 
         return new ConversationResource($conversation);
     }
@@ -62,10 +50,7 @@ class ConversationController extends Controller
     public function callAdmin(Conversation $conversation)
     {
         $this->authorize('callAdmin', $conversation);
-
-        $conversation->update([
-            'status' => ConversationStatusEnum::WAIT_FOR_ADMIN->value,
-        ]);
+        $conversation = $this->conversationService->callAdmin($conversation);
 
         return new ConversationResource($conversation);
     }

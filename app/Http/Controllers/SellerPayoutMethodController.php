@@ -7,27 +7,24 @@ use App\Http\Requests\SellerPayoutMethod\StoreSellerPayoutMethodRequest;
 use App\Http\Requests\SellerPayoutMethod\UpdateSellerPayoutMethodRequest;
 use App\Http\Resources\SellerPayoutMethodResource;
 use App\Models\SellerPayoutMethod;
+use App\Services\SellerPayoutMethodService;
 use Illuminate\Http\Request;
 
 class SellerPayoutMethodController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        private readonly SellerPayoutMethodService $sellerPayoutMethodService,
+    ) {
         $this->authorizeResource(SellerPayoutMethod::class, 'sellerPayoutMethod');
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $user = $request->user();
-        if ($user->isAdmin()) {
-            $methods = SellerPayoutMethod::query()->paginate(20);
+        $methods = $this->sellerPayoutMethodService->index($request->user());
 
-        } else {
-            $methods = SellerPayoutMethod::where('seller_id', $user->seller->id)->get();
-
-        }
         return SellerPayoutMethodResource::collection($methods);
     }
 
@@ -36,14 +33,8 @@ class SellerPayoutMethodController extends Controller
      */
     public function store(StoreSellerPayoutMethodRequest $request)
     {
-        $data = $request->validated();
-        $user = $request->user();
-        $sellerPayoutMethod = SellerPayoutMethod::create([
-            'seller_id' => $user->seller->id,
-            'payout_method_id' => $data['payout_method_id'],
-            'details' => $data['details'],
-            'status' => PayoutStatusEnum::PENDING->value,
-        ]);
+        $sellerPayoutMethod = $this->sellerPayoutMethodService->create($request->user(), $request->validated());
+
         return new SellerPayoutMethodResource($sellerPayoutMethod);
     }
 
@@ -61,6 +52,7 @@ class SellerPayoutMethodController extends Controller
     public function update(UpdateSellerPayoutMethodRequest $request, SellerPayoutMethod $sellerPayoutMethod)
     {
         $sellerPayoutMethod->update($request->validated());
+
         return new SellerPayoutMethodResource($sellerPayoutMethod);
     }
 
@@ -70,7 +62,7 @@ class SellerPayoutMethodController extends Controller
     public function destroy(SellerPayoutMethod $sellerPayoutMethod)
     {
         $sellerPayoutMethod->delete();
-        return response()
-            ->noContent();
+
+        return response()->noContent();
     }
 }

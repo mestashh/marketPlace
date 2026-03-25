@@ -63,7 +63,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return response()
-            ->noContent();
+        return response()->noContent();
     }
 }

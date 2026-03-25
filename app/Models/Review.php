@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
+ * @method static create(array $array)
+ * @method static where(string $string, string $value)
  */
 class Review extends Model
 {

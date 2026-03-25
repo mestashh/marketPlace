@@ -6,8 +6,6 @@ use App\Http\Requests\Address\StoreAddressRequest;
 use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AddressController extends Controller
 {
@@ -21,7 +19,9 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return AddressResource::collection(Address::query()->paginate(20));
+        $address = Address::query()->paginate(20);
+
+        return AddressResource::collection($address);
     }
 
     /**
@@ -40,9 +40,7 @@ class AddressController extends Controller
             'phone' => $data['phone'],
         ]);
 
-        return new AddressResource($address)
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+        return new AddressResource($address);
     }
 
     /**

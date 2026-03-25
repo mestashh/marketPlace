@@ -7,13 +7,13 @@ use App\Http\Requests\Seller\StoreSellerRequest;
 use App\Http\Requests\Seller\UpdateSellerRequest;
 use App\Http\Resources\SellerResource;
 use App\Models\Seller;
-use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
+use App\Services\SellerService;
 
 class SellerController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        private readonly SellerService $sellerService,
+    ) {
         $this->authorizeResource(Seller::class, 'seller');
     }
 
@@ -29,23 +29,16 @@ class SellerController extends Controller
         return new SellerResource($seller);
     }
 
-    public function store(StoreSellerRequest $request, User $user)
+    public function store(StoreSellerRequest $request)
     {
-        $data = $request->validated();
-        $seller = Seller::create([
-            'user_id' => $request->user()->id,
-            'TIN' => $data['TIN'],
-        ]);
+        $seller = $this->sellerService->create($request->user(), $request->validated());
 
-        return new SellerResource($seller)
-            ->response()
-            ->setStatusCode(Response::HTTP_CREATED);
+        return new SellerResource($seller);
     }
 
     public function update(UpdateSellerRequest $request, Seller $seller)
     {
-        $data = $request->validated();
-        $seller->update($data);
+        $seller->update($request->validated());
 
         return new SellerResource($seller);
     }

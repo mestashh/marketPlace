@@ -8,17 +8,18 @@ use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Http\Resources\ReviewResource;
 use App\Models\Product;
 use App\Models\Review;
+use App\Services\ReviewService;
 
 class ReviewController extends Controller
 {
+    public function __construct(private readonly ReviewService $reviewService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index(Product $product)
     {
-        $review = Review::where('status', StatusEnum::ACCESS->value)
-            ->where('product_id', $product->id)
-            ->get();
+        $review = $this->reviewService->index($product);
 
         return ReviewResource::collection($review);
     }
@@ -29,15 +30,7 @@ class ReviewController extends Controller
     public function store(StoreReviewRequest $request, Product $product)
     {
         $this->authorize('create', [Review::class, $product]);
-        $user = $request->user();
-        $data = $request->validated();
-        $review = Review::create([
-            'user_id' => $user->id,
-            'product_id' => $product->id,
-            'rating' => $data['rating'],
-            'text' => $data['text'],
-            'status' => StatusEnum::CHECKING->value,
-        ]);
+        $review = $this->reviewService->create($request->user(), $request->validated(), $product);
 
         return new ReviewResource($review);
     }

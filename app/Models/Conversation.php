@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @property mixed $status
  * @property mixed $admin_id
  * @property mixed $id
+ * @method static where(string $string, $id)
+ * @method static create(array $array)
  */
 class Conversation extends Model
 {

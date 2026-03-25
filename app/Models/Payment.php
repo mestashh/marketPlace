@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $order
+ * @method static where(string $string, mixed $id)
+ * @method static create(array $array)
  */
 class Payment extends Model
 {

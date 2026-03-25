@@ -26,7 +26,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/token', [UserController::class, 'getBearerToken']);
     Route::post('/register', [UserController::class, 'store']);
 
-    Route::get('/shop', [ShopController::class, 'index']);
+    Route::get('/shops', [ShopController::class, 'index']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);

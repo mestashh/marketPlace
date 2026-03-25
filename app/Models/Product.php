@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
  * @property mixed $productVariants
  * @property mixed $id
  * @method static inRandomOrder()
+ * @method static create(array $array)
  */
 class Product extends Model
 {

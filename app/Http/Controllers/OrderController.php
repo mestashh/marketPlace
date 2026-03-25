@@ -6,11 +6,13 @@ use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Services\OrderService;
 use Symfony\Component\HttpFoundation\Request;
+use Throwable;
 
 class OrderController extends Controller
 {
-    public function __construct()
+    public function __construct(private readonly OrderService $orderService)
     {
         $this->authorizeResource(Order::class, 'order');
     }
@@ -20,18 +22,20 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $request->user();
-        $order = Order::where('user_id', $user->id)->get();
+        $order = Order::where('user_id', $request->user()->id)->get();
 
         return OrderResource::collection($order);
     }
 
     /**
      * Store a newly created resource in storage.
+     * @throws Throwable
      */
     public function store(StoreOrderRequest $request)
     {
-        // write service
+        $order = $this->orderService->store($request->user(), $request->validated(), $request->user()->cart);
+
+        return new OrderResource($order);
     }
 
     /**
@@ -59,7 +63,6 @@ class OrderController extends Controller
     {
         $order->delete();
 
-        return response()
-            ->NoContent();
+        return response()->NoContent();
     }
 }

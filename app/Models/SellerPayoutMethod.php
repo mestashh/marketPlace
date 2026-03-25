@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $seller_id
+ * @method static create(array $array)
  */
 class SellerPayoutMethod extends Model
 {

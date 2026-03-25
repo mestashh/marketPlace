@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property $user_id
  * @property $id
  * @method static inRandomOrder()
+ * @method static findOrFail(mixed $shop_order_id)
+ * @method static create(array $array)
  */
 class ShopOrder extends Model
 {
@@ -19,7 +21,7 @@ class ShopOrder extends Model
     /**
      * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
      */
-    protected $fillable = ['status', 'subtotal_price'];
+    protected $fillable = ['status', 'subtotal_price', 'order_id', 'shop_id'];
 
     public function conversations(): HasMany
     {

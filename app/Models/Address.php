@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
+ * @method static create(array $array)
  */
 class Address extends Model
 {

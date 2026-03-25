@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
  * @property mixed $id
  * @property mixed $total_price
  * @method static inRandomOrder()
+ * @method static where(string $string, mixed $id)
+ * @method static create(array $array)
  */
 class Order extends Model
 {

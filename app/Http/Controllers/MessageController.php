@@ -6,9 +6,12 @@ use App\Http\Requests\Message\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Services\MessageService;
 
 class MessageController extends Controller
 {
+    public function __construct(private readonly MessageService $messageService) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -26,12 +29,7 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request, Conversation $conversation)
     {
         $this->authorize('create', [Message::class, $conversation]);
-        $data = $request->validated();
-        $message = Message::create([
-            'conversation_id' => $conversation->id,
-            'user_id' => $request->user()->id,
-            'text' => $data['text'],
-        ]);
+        $message = $this->messageService->store($request->user(), $request->validated(), $conversation);
 
         return new MessageResource($message);
     }
@@ -42,6 +40,7 @@ class MessageController extends Controller
     public function show(Message $message, Conversation $conversation)
     {
         $this->authorize('view', [Message::class, $conversation]);
+
         return new MessageResource($message);
     }
 }

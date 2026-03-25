@@ -5,22 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Payout\StorePayoutRequest;
 use App\Http\Resources\PayoutResource;
 use App\Models\Payout;
+use App\Services\PayoutService;
 use Illuminate\Http\Request;
 
 class PayoutController extends Controller
 {
+    public function __construct(private readonly PayoutService $payoutService) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $this->authorize('viewAny', Payout::class);
-        $user = $request->user();
-        if ($user->isAdmin()) {
-            $payout = Payout::query()->paginate(20);
-        } elseif ($user->isSeller()) {
-            $payout = Payout::where('seller_id', $user->seller->id)->get();
-        }
+        $payout = $this->payoutService->index($request->user());
 
         return PayoutResource::collection($payout);
     }
@@ -31,12 +29,8 @@ class PayoutController extends Controller
     public function store(StorePayoutRequest $request)
     {
         $this->authorize('create', Payout::class);
-        $user = $request->user()->seller->id;
-        $data = $request->validated();
-        $payout = Payout::create([
-            'seller_id' => $user,
-            'amount' => $data['amount'],
-        ]);
+        $payout = $this->payoutService->store($request->user(), $request->validated());
+
         return new PayoutResource($payout);
     }
 
@@ -46,6 +40,7 @@ class PayoutController extends Controller
     public function show(Payout $payout)
     {
         $this->authorize('view', $payout);
+
         return new PayoutResource($payout);
     }
 }

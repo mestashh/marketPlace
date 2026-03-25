@@ -7,11 +7,13 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        private readonly ProductService $productService,
+    ) {
         $this->authorizeResource(Product::class, 'product');
     }
 
@@ -30,14 +32,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $user = $request->user();
-        $data = $request->validated();
-        $product = Product::create([
-            'shop_id' => $user->seller->shop->id,
-            'category_id' => $data['category_id'],
-            'name' => $data['name'],
-            'description' => $data['description'],
-        ]);
+        $product = $this->productService->create($request->user(), $request->validated());
 
         return new ProductResource($product);
     }

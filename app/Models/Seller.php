@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $user_id
  * @method static inRandomOrder()
+ * @method static create(array $array)
  */
 class Seller extends Authenticatable
 {
