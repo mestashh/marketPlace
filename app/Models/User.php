@@ -13,6 +13,13 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed $id
  * @property mixed $admin
  * @property mixed $seller
+ * @property mixed $cart
+ * @property mixed $email
+ * @property mixed $email_verification_code
+ * @property mixed $email_verified_at
+ * @property mixed $email_verification_expires_at
+ * @property mixed $email_verification_attempts
+ *
  * @method static inRandomOrder()
  * @method static where(string $string, int $int)
  * @method static find(int $int)
@@ -22,7 +29,18 @@ class User extends Authenticatable
 {
     use HasApiTokens, hasFactory;
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'email_verified_at', 'phone', 'password', 'access_status'];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'email_verified_at',
+        'phone',
+        'password',
+        'access_status',
+        'email_verification_code',
+        'email_verification_expires_at',
+        'email_verification_attempts',
+    ];
 
     protected $hidden = ['remember_token'];
 
@@ -81,6 +99,11 @@ class User extends Authenticatable
     public function reviews(): HasMany
     {
         return $this->HasMany(Review::class);
+    }
+
+    public function isEmailVerified(): bool
+    {
+        return $this->email_verified_at !== null;
     }
 
     protected static function booted(): void

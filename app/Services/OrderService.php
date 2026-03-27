@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Enums\OrderStatusEnum;
+use App\Events\Order\OrderCreated;
+use App\Exceptions\Order\CartIsEmptyException;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -21,7 +23,7 @@ class OrderService
         $totalPrice = 0;
         $cartItems = $cart->cartItems()->with('productVariant.product')->get();
         if ($cartItems->isEmpty()) {
-            Throw new \Exception('Корзина пуста');
+            throw new CartIsEmptyException;
         }
         foreach ($cartItems as $cartItem) {
             $totalPrice += $cartItem->price * $cartItem->quantity;
@@ -60,6 +62,8 @@ class OrderService
                 }
             }
             $cart->cartItems()->delete();
+
+            event(new OrderCreated($order));
             return $order;
         });
     }

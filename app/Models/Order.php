@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
  * @property mixed $user_id
  * @property mixed $id
  * @property mixed $total_price
+ * @property mixed $user
  * @method static inRandomOrder()
  * @method static where(string $string, mixed $id)
  * @method static create(array $array)

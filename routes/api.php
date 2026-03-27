@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('users', UserController::class);
+        Route::post('me/email/verify', [UserController::class, 'verifyEmail']);
         Route::apiResource('me/orders', OrderController::class);
         Route::apiResource('address', AddressController::class);
         Route::apiResource('admin', AdminController::class);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\VerifyEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
@@ -62,5 +63,13 @@ class UserController extends Controller
         $user->update($request->validated());
 
         return new UserResource($user);
+    }
+
+    public function verifyEmail(VerifyEmailRequest $request)
+    {
+        $this->userService->verifyEmail($request->user(), $request->email_verification_code);
+
+        return response()->json(['message' => 'Email verified'], 200);
+
     }
 }
