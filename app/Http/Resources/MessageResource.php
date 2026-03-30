@@ -21,9 +21,6 @@ class MessageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $user = $request->user();
-        $timezone = $user->timezone;
-
         return [
             'message_uuid' => $this->uuid,
             'conversation_uuid' => $this->conversation->uuid,

@@ -6,10 +6,12 @@ use App\Http\Requests\Address\StoreAddressRequest;
 use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
+use App\Services\AddressService;
+use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends Controller
 {
-    public function __construct()
+    public function __construct(public AddressService $addressService)
     {
         $this->authorizeResource(Address::class, 'address');
     }
@@ -17,9 +19,9 @@ class AddressController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $address = Address::query()->paginate(20);
+        $address = $this->addressService->index($request->user());
 
         return AddressResource::collection($address);
     }
@@ -29,16 +31,7 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request)
     {
-        $data = $request->validated();
-        $address = Address::create([
-            'user_id' => $request->user()->id,
-            'country' => $data['country'],
-            'city' => $data['city'],
-            'street' => $data['street'],
-            'house' => $data['house'],
-            'description' => $data['description'],
-            'phone' => $data['phone'],
-        ]);
+        $address = $this->addressService->store($request->user(), $request->validated());
 
         return new AddressResource($address);
     }

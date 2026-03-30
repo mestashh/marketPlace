@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Payout\StorePayoutMethodRequest;
-use App\Http\Requests\Payout\UpdatePayoutMethodRequest;
+use App\Http\Requests\PayoutMethod\StorePayoutMethodRequest;
+use App\Http\Requests\PayoutMethod\UpdatePayoutMethodRequest;
 use App\Http\Resources\PayoutMethodResource;
 use App\Models\PayoutMethod;
 

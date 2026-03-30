@@ -24,7 +24,7 @@ class UpdateReviewRequest extends FormRequest
     {
         return [
             'rating' => ['sometimes', 'integer', 'min:1', 'max:5'],
-            'text' => ['sometimes', 'string'],
+            'text' => ['sometimes', 'string', 'min:50', 'max:500'],
         ];
     }
 }

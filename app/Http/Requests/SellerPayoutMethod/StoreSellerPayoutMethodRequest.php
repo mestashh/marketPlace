@@ -23,7 +23,7 @@ class StoreSellerPayoutMethodRequest extends FormRequest
     {
         return [
             'payout_method_id' => ['required', 'integer', 'exists:payout_methods,id'],
-            'details' => ['required'],
+            'details' => ['required', 'json'],
         ];
     }
 }

@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Enums\OrderStatusEnum;
 use App\Events\Order\OrderCreated;
+use App\Exceptions\CartItem\ProductVariantStockException;
+use App\Exceptions\Order\AddressNotFoundException;
 use App\Exceptions\Order\CartIsEmptyException;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ProductVariant;
 use App\Models\ShopOrder;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +18,17 @@ use Throwable;
 
 class OrderService
 {
+    public function index(User $user)
+    {
+        if ($user->isAdmin()) {
+            $order = Order::query()->paginate(20);
+        } else {
+            $order = Order::where('user_id', $user->id)->get();
+        }
+
+        return $order;
+    }
+
     /**
      * @throws Throwable
      */
@@ -34,6 +48,11 @@ class OrderService
         });
 
         return DB::transaction(function () use ($user, $data, $totalPrice, $grouped, $cart) {
+            if (! $user->addresses()
+                ->where('id', $data['address_id'])
+                ->exists()) {
+                throw new AddressNotFoundException;
+            }
             $order = Order::create([
                 'user_id' => $user->id,
                 'address_id' => $data['address_id'],
@@ -44,6 +63,13 @@ class OrderService
             foreach ($grouped as $shopId => $items) {
                 $subtotalPrice = 0;
                 foreach ($items as $item) {
+                    $variant = ProductVariant::where('id', $item->product_variant_id)
+                        ->lockForUpdate()
+                        ->first();
+                    if ($variant->stock < $item->quantity) {
+                        throw new ProductVariantStockException;
+                    }
+                    $variant->decrement('stock', $item->quantity);
                     $subtotalPrice += $item->price * $item->quantity;
                 }
                 $shopOrder = ShopOrder::create([
@@ -63,8 +89,25 @@ class OrderService
             }
             $cart->cartItems()->delete();
 
-            event(new OrderCreated($order));
+            event(new OrderCreated($order->id));
+
             return $order;
         });
+    }
+
+    /**
+     * @throws AddressNotFoundException
+     */
+    public function update(User $user, array $data, Order $order): Order
+    {
+        if (! $user->addresses()
+            ->where('id', $data['address_id'])
+            ->exists()) {
+            throw new AddressNotFoundException;
+        }
+
+        $order->update($data);
+
+        return $order;
     }
 }

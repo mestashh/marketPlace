@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $description
  * @property mixed $status
  * @property mixed $uuid
+ * @property mixed $seller
  */
 class ShopResource extends JsonResource
 {

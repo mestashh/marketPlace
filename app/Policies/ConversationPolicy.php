@@ -29,7 +29,7 @@ class ConversationPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user, Order $order): bool // дописать, чтобы нельзя было открыть 2 спор пока есть 1.
+    public function create(User $user, Order $order): bool
     {
         return $user->hasOrders() && $order->status == OrderStatusEnum::DELIVERED->value && $user->id == $order->user_id;
     }

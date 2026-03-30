@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
+use App\Enums\StatusEnum;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -28,9 +30,9 @@ class CartItemPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, ProductVariant $productVariant): bool
     {
-        return true;
+        return $productVariant->access_status == StatusEnum::ACCESS->value;
     }
 
     /**

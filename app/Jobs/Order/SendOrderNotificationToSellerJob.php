@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Order;
 
+use App\Mail\Order\OrderNotificationToSellerMail;
 use App\Models\Order;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -14,7 +15,7 @@ class SendOrderNotificationToSellerJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Order $order)
+    public function __construct(public int $orderId)
     {
         $this->afterCommit();
     }
@@ -24,8 +25,11 @@ class SendOrderNotificationToSellerJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::raw('Order', function ($message) {
-            $message->to($this->order->user->email)->subject('New order was created');
-        });
+        $order = Order::with('shopOrders.shop.seller.user')->find($this->orderId);
+        foreach ($order->shopOrders as $shopOrder) {
+            $seller = $shopOrder->shop->seller->user;
+            Mail::to($seller->email)->send(new OrderNotificationToSellerMail($shopOrder));
+        }
+
     }
 }

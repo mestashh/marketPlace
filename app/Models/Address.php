@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $user_id
  * @method static create(array $array)
+ * @method static where(string $string, mixed $id)
  */
 class Address extends Model
 {

@@ -13,7 +13,7 @@ class CartItemController extends Controller
 {
     public function __construct(private readonly CartItemService $cartItemService)
     {
-        $this->authorizeResource(CartItem::class, 'item');
+        //
     }
 
     /**
@@ -21,7 +21,9 @@ class CartItemController extends Controller
      */
     public function store(StoreCartItemRequest $request)
     {
-        $item = $this->cartItemService->store($request->user()->cart, $request->validated());
+        $data = $request->validated();
+        $this->authorize('create', [CartItem::class, ProductVariant::where('id', $data['product_variant_id'])->first()]);
+        $item = $this->cartItemService->store($request->user()->cart, $data);
 
         return new CartItemResource($item);
     }
@@ -31,6 +33,7 @@ class CartItemController extends Controller
      */
     public function show(CartItem $item)
     {
+        $this->authorize('view', CartItem::class);
         return new CartItemResource($item);
     }
 
@@ -39,6 +42,7 @@ class CartItemController extends Controller
      */
     public function update(UpdateCartItemRequest $request, CartItem $item)
     {
+        $this->authorize('update', CartItem::class);
         $item->update($request->validated());
 
         return new CartItemResource($item);
@@ -49,6 +53,7 @@ class CartItemController extends Controller
      */
     public function destroy(CartItem $item)
     {
+        $this->authorize('delete', CartItem::class);
         $item->delete();
 
         return response()->noContent();

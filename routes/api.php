@@ -41,10 +41,9 @@ Route::prefix('v1')->group(function () {
         Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
         Route::patch('shop/status/{shop}', [ShopController::class, 'changeStatus']);
         Route::patch('seller/status/{seller}', [SellerController::class, 'changeStatus']);
-
-        Route::get('cart', [CartController::class, 'show']);
+        Route::post('cart/items/{item}', [CartItemController::class, 'store']);
         Route::apiResource('cart/items', CartItemController::class)
-            ->except(['show', 'index']);
+            ->except(['show', 'index', 'post']);
 
         Route::apiResource('seller', SellerController::class)
             ->except('index');

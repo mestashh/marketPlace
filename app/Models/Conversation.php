@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
  * @property mixed $id
  * @method static where(string $string, $id)
  * @method static create(array $array)
+ * @method static find(int $conversationId)
  */
 class Conversation extends Model
 {

@@ -65,6 +65,7 @@ class UserService
         }
 
         if ($user->email_verification_expires_at < now()) {
+            event(new GenerateEmailVerification($user->id));
             throw new CodeAlreadyInvalidException;
         }
 

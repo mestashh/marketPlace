@@ -50,9 +50,9 @@ class ConversationController extends Controller
     public function callAdmin(Conversation $conversation)
     {
         $this->authorize('callAdmin', $conversation);
-        $conversation = $this->conversationService->callAdmin($conversation);
+        $this->conversationService->callAdmin($conversation);
 
-        return new ConversationResource($conversation);
+        return response()->json(['message' => 'Admin called'], 200);
     }
 
     public function close(Conversation $conversation)

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PayoutMethod\storeProductVariantRequest;
-use App\Http\Requests\PayoutMethod\UpdateProductVariantRequest;
+use App\Http\Requests\ProductVariant\storeProductVariantRequest;
+use App\Http\Requests\ProductVariant\UpdateProductVariantRequest;
 use App\Http\Resources\ProductVariantResource;
 use App\Models\Product;
 use App\Models\ProductVariant;

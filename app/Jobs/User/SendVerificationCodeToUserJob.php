@@ -2,6 +2,7 @@
 
 namespace App\Jobs\User;
 
+use App\Mail\User\VerificationCodeToUserMail;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -25,11 +26,11 @@ class SendVerificationCodeToUserJob implements ShouldQueue
     public function handle(): void
     {
         $user = User::find($this->userId);
-        $user->email_verification_code = random_int(100000, 999999);
-        $user->email_verification_expires_at = now()->addMinutes(10);
-        $user->save();
-        Mail::raw('Your verification code-'.$user->email_verification_code, function ($message) use ($user) {
-            $message->to($user->email)->subject('Verification_code');
-        });
+        $code = random_int(100000, 999999);
+        $user->update([
+            'email_verification_code' => $code,
+            'email_verification_expires_at' => now()->addMinutes(10),
+        ]);
+        Mail::to($user->email)->send(new VerificationCodeToUserMail($code));
     }
 }

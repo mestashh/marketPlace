@@ -8,6 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property mixed $name
  * @property mixed $uuid
+ * @property mixed $parent
  */
 class CategoryResource extends JsonResource
 {

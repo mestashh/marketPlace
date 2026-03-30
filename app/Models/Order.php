@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * @property mixed $id
  * @property mixed $total_price
  * @property mixed $user
+ * @property \Illuminate\Support\HigherOrderCollectionProxy|mixed $shopOrders
  * @method static inRandomOrder()
  * @method static where(string $string, mixed $id)
  * @method static create(array $array)

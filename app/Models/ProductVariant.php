@@ -10,8 +10,10 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $product
+ * @property mixed $access_status
  * @method static inRandomOrder()
  * @method static findOrFail(mixed $product_variant_id)
+ * @method static where(string $string, mixed $product_variant_id)
  */
 class ProductVariant extends Model
 {

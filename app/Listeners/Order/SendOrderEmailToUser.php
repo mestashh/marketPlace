@@ -20,7 +20,7 @@ class SendOrderEmailToUser
      */
     public function handle(OrderCreated $event): void
     {
-        $order = $event->order;
+        $order = $event->orderId;
         SendOrderEmailToUserJob::dispatch($order);
     }
 }

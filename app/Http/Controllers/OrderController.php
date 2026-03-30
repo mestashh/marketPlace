@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Order\AddressNotFoundException;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
@@ -22,7 +23,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $order = Order::where('user_id', $request->user()->id)->get();
+        $order = $this->orderService->index($request->user());
 
         return OrderResource::collection($order);
     }
@@ -48,10 +49,11 @@ class OrderController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws AddressNotFoundException
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        $order->update($request->validated());
+        $order = $this->orderService->update($request->user(), $request->validated(), $order);
 
         return new OrderResource($order);
     }

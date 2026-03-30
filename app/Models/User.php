@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * @property mixed $id
@@ -19,15 +20,17 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed $email_verified_at
  * @property mixed $email_verification_expires_at
  * @property mixed $email_verification_attempts
+ * @property mixed $access_status
  *
  * @method static inRandomOrder()
  * @method static where(string $string, int $int)
  * @method static find(int $int)
  * @method static create(array $array)
+ * @method static whereHas(string $string)
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, hasFactory;
+    use HasApiTokens, hasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',

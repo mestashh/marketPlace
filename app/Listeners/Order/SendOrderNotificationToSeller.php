@@ -20,7 +20,7 @@ class SendOrderNotificationToSeller
      */
     public function handle(OrderCreated $event): void
     {
-        $order = $event->order;
+        $order = $event->orderId;
         SendOrderNotificationToSellerJob::dispatch($order);
     }
 }

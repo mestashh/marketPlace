@@ -24,7 +24,6 @@ class ProductVariantResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            //'product_uuid' => $this->product->uuid,
             'product_variant_uuid' => $this->uuid,
             'name' => $this->name,
             'description' => $this->description,

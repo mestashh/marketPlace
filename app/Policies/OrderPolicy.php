@@ -3,9 +3,9 @@
 namespace App\Policies;
 
 use App\Enums\OrderStatusEnum;
+use App\Enums\StatusEnum;
 use App\Models\Order;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class OrderPolicy
 {
@@ -22,7 +22,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        return $user->id == $order->user_id;
+        return $user->id == $order->user_id && $user->isAdmin();
     }
 
     /**
@@ -30,7 +30,9 @@ class OrderPolicy
      */
     public function create(User $user): bool
     {
-        return ! $user->cart->cartItems->isEmpty();
+        return ! $user->cart->cartItems->isEmpty()
+            && $user->hasVerifiedEmail()
+            && $user->access_status == StatusEnum::ACCESS->value;
     }
 
     /**

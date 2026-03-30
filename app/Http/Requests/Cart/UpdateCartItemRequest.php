@@ -22,8 +22,8 @@ class UpdateCartItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_variant_id' => ['sometimes', 'integer', 'exists:product_variants,id'],
-            'quantity' => ['sometimes', 'integer'],
+            'product_variant_id' => ['required', 'integer', 'exists:product_variants,id'],
+            'quantity' => ['required', 'integer', 'max:10000', 'min:1'],
         ];
     }
 }

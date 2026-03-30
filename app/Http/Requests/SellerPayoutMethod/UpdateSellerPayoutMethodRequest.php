@@ -23,7 +23,7 @@ class UpdateSellerPayoutMethodRequest extends FormRequest
     {
         return [
             'payout_method_id' => ['sometimes', 'integer', 'exists:payout_methods,id'],
-            'details' => ['sometimes'],
+            'details' => ['sometimes', 'json'],
         ];
     }
 }
