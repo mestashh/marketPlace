@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddressController extends Controller
 {
-    public function __construct(public AddressService $addressService)
+    public function __construct(private readonly AddressService $addressService)
     {
         $this->authorizeResource(Address::class, 'address');
     }

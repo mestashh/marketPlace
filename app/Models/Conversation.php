@@ -17,11 +17,12 @@ use Illuminate\Support\Str;
  * @method static where(string $string, $id)
  * @method static create(array $array)
  * @method static find(int $conversationId)
+ * @method static findOrFail(int $conversationId)
  */
 class Conversation extends Model
 {
     use HasFactory;
-    protected $fillable = ['status', 'shop_order_id', 'user_id', 'seller_id'];
+    protected $fillable = ['status', 'shop_order_id', 'user_id', 'seller_id', 'admin_id'];
 
     public function shopOrder(): BelongsTo
     {

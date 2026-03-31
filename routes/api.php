@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
         Route::post('me/email/verify', [UserController::class, 'verifyEmail']);
         Route::apiResource('me/orders', OrderController::class);
         Route::apiResource('address', AddressController::class);
+        Route::post('admin/conversation/take', [AdminController::class, 'joinConversation']);
         Route::apiResource('admin', AdminController::class);
         Route::apiResource('seller/shop', ShopController::class);
         Route::apiResource('marketplace/payoutMethod', PayoutMethodController::class);
@@ -41,6 +42,8 @@ Route::prefix('v1')->group(function () {
         Route::patch('user/status/{user}', [UserController::class, 'changeStatus']);
         Route::patch('shop/status/{shop}', [ShopController::class, 'changeStatus']);
         Route::patch('seller/status/{seller}', [SellerController::class, 'changeStatus']);
+
+
         Route::post('cart/items/{item}', [CartItemController::class, 'store']);
         Route::apiResource('cart/items', CartItemController::class)
             ->except(['show', 'index', 'post']);

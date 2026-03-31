@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $role
  * @method static where(string $string, string $value)
+ * @method static create(array $array)
+ * @method static find(mixed $user_id)
  */
 class Admin extends Authenticatable
 {

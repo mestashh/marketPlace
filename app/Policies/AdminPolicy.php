@@ -5,7 +5,6 @@ namespace App\Policies;
 use App\Enums\AdminRoleEnum;
 use App\Models\Admin;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class AdminPolicy
 {
@@ -47,5 +46,10 @@ class AdminPolicy
     public function delete(User $user, Admin $admin): bool
     {
         return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+    }
+
+    public function joinConversation(User $user): bool
+    {
+        return $user->isAdmin();
     }
 }

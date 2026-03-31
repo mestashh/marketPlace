@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Enums\AdminRoleEnum;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 
-class StoreAdminRequest extends FormRequest
+class JoinConversationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +22,7 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['required', new Enum(AdminRoleEnum::class)],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
+            'conversation_id' => ['required', 'exists:conversations,id'],
         ];
     }
 }
