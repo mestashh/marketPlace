@@ -52,4 +52,9 @@ class AdminPolicy
     {
         return $user->isAdmin();
     }
+
+    public function changeStatus(User $user): bool
+    {
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
+    }
 }

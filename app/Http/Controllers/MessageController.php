@@ -18,7 +18,7 @@ class MessageController extends Controller
     public function index(Conversation $conversation)
     {
         $this->authorize('viewAny', [Message::class, $conversation]);
-        $message = Message::where('conversation_id', $conversation->id)->get();
+        $message = Message::where('conversation_id', $conversation->id)->paginate(20);
 
         return MessageResource::collection($message);
     }

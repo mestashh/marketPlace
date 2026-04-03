@@ -11,8 +11,16 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $user_id
+ * @property mixed $user
+ * @property mixed $id
+ * @property mixed $access_status
+ *
  * @method static inRandomOrder()
  * @method static create(array $array)
+ * @method static find(mixed $id)
+ * @method static findOrFail(mixed $id)
+ * @method static where(string $string, string $value)
+ * @method static paginate(int $int)
  */
 class Seller extends Authenticatable
 {

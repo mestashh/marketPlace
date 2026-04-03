@@ -10,7 +10,6 @@ use App\Exceptions\Email\TooManyAttemptsException;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
-use Random\RandomException;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserService
@@ -37,9 +36,6 @@ class UserService
         ]);
     }
 
-    /**
-     * @throws RandomException
-     */
     public function registration($request)
     {
         $data = $request->validated();
@@ -83,8 +79,6 @@ class UserService
             $user->increment('email_verification_attempts');
             throw new InvalidCodeException;
         }
-
-
 
         $user->update([
             'email_verified_at' => now(),

@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
  * @property mixed $seller
  * @method static where(string $string, $id)
  * @method static create(array $array)
+ * @method static paginate(int $int)
  */
 class Payout extends Model
 {

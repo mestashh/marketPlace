@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @method static create(array $array)
  * @method static find(int $conversationId)
  * @method static findOrFail(int $conversationId)
+ * @method static paginate(int $int)
  */
 class Conversation extends Model
 {

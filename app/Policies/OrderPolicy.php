@@ -22,7 +22,7 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        return $user->id == $order->user_id && $user->isAdmin();
+        return $user->id == $order->user_id || $user->isAdmin();
     }
 
     /**
@@ -41,13 +41,5 @@ class OrderPolicy
     public function update(User $user, Order $order): bool
     {
         return $user->id == $order->user_id;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Order $order): bool
-    {
-        return $order->status === OrderStatusEnum::PAID->value || $order->status === OrderStatusEnum::CREATED->value;
     }
 }

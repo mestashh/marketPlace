@@ -57,14 +57,4 @@ class OrderController extends Controller
 
         return new OrderResource($order);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
-    {
-        $order->delete();
-
-        return response()->NoContent();
-    }
 }

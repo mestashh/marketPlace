@@ -38,7 +38,7 @@ class SellerPayoutMethodPolicy
      */
     public function update(User $user, SellerPayoutMethod $sellerPayoutMethod): bool
     {
-        return true;
+        return $user->seller->id == $sellerPayoutMethod->seller_id;
     }
 
     /**

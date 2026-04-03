@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static inRandomOrder()
  * @method static create(array $array)
+ * @method static paginate(int $int)
  */
 class PaymentMethod extends Model
 {

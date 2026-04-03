@@ -37,7 +37,7 @@ class NotificationToSellerMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'conversation.seller.conversation-created',
+            markdown: 'emails.conversation.seller-conversation-created',
         );
     }
 

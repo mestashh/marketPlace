@@ -12,6 +12,11 @@ use Illuminate\Support\Str;
  * @method static inRandomOrder()
  * @method static take(int $int)
  * @method static find(int $int)
+ * @method static create(array $array)
+ * @method static findOrFail(mixed $id)
+ * @method static paginate(int $int)
+ * @property mixed $seller
+ * @property mixed $seller_id
  */
 class Shop extends Model
 {
@@ -46,7 +51,7 @@ class Shop extends Model
         });
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }

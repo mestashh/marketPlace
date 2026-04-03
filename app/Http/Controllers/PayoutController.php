@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Payout\PayoutAccessException;
 use App\Http\Requests\Payout\StorePayoutRequest;
 use App\Http\Resources\PayoutResource;
 use App\Models\Payout;
@@ -14,6 +15,7 @@ class PayoutController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @throws PayoutAccessException
      */
     public function index(Request $request)
     {

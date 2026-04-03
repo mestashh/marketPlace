@@ -18,7 +18,7 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        $payment_method = PaymentMethod::query()->paginate(20);
+        $payment_method = PaymentMethod::paginate(20);
 
         return PaymentMethodResource::collection($payment_method);
     }

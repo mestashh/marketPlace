@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ConversationStatusEnum;
+use App\Exceptions\Conversation\ConversationCallAdminException;
 use App\Http\Requests\Conversation\StoreConversationRequest;
 use App\Http\Resources\ConversationResource;
 use App\Models\Conversation;
@@ -47,6 +48,9 @@ class ConversationController extends Controller
         return new ConversationResource($conversation);
     }
 
+    /**
+     * @throws ConversationCallAdminException
+     */
     public function callAdmin(Conversation $conversation)
     {
         $this->authorize('callAdmin', $conversation);

@@ -2,20 +2,24 @@
 
 namespace App\Services;
 
+use App\Exceptions\Payout\PayoutAccessException;
 use App\Models\Payout;
 use App\Models\User;
 
 class PayoutService
 {
+    /**
+     * @throws PayoutAccessException
+     */
     public function index(User $user)
     {
         if ($user->isAdmin()) {
-            return Payout::query()->paginate(20);
+            return Payout::paginate(20);
         } elseif ($user->isSeller()) {
-            return Payout::where('seller_id', $user->seller->id)->get();
+            return Payout::where('seller_id', $user->seller->id)->paginate(20);
+        } else {
+            throw new PayoutAccessException;
         }
-
-        return response('No access');
     }
 
     public function store(User $user, array $data)

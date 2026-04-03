@@ -10,9 +10,9 @@ class AddressService
     public function index(User $user)
     {
         if ($user->isAdmin()) {
-            return Address::query()->paginate(20);
+            return Address::paginate(20);
         } else {
-            return Address::where('user_id', $user->id)->get();
+            return Address::where('user_id', $user->id)->paginate(20);
         }
     }
 

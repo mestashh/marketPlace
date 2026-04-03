@@ -7,10 +7,13 @@ use App\Http\Requests\ProductImage\UpdateProductImageRequest;
 use App\Http\Resources\ProductImageResource;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Services\ProductImageService;
 use Illuminate\Support\Facades\Storage;
 
 class ProductImageController extends Controller
 {
+    public function __construct(private readonly ProductImageService $productImageService) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -25,9 +28,7 @@ class ProductImageController extends Controller
     public function store(StoreProductImageRequest $request, Product $product)
     {
         $this->authorize('create', [ProductImage::class, $product]);
-        $data = $request->validated();
-        $data['position'] = $product->productImages()->max('position') + 1;
-        $image = $product->productImages()->create($data);
+        $image = $this->productImageService->create($request->validated(), $product);
 
         return new ProductImageResource($image);
     }

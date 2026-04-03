@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
  * @property mixed $user_id
  * @method static create(array $array)
  * @method static where(string $string, mixed $id)
+ * @method static paginate(int $int)
  */
 class Address extends Model
 {
@@ -44,7 +45,7 @@ class Address extends Model
         });
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'uuid';
     }

@@ -49,9 +49,4 @@ class ProductPolicy
     {
         return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === StatusEnum::ACCESS->value;
     }
-
-    public function changeStatus(User $user): bool
-    {
-        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
-    }
 }

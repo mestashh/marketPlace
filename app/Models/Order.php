@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
  * @method static inRandomOrder()
  * @method static where(string $string, mixed $id)
  * @method static create(array $array)
+ * @method static paginate(int $int)
  */
 class Order extends Model
 {

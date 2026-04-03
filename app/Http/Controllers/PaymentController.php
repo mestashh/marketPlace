@@ -20,7 +20,7 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $this->authorize(Payment::class, 'payment');
-        $payment = Payment::where('user_id', $request->user()->id)->get();
+        $payment = Payment::where('user_id', $request->user()->id)->paginate(20);
 
         return PaymentResource::collection($payment);
     }

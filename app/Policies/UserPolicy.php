@@ -29,14 +29,4 @@ class UserPolicy
     {
         return $authUser->isAdmin() || $authUser->id === $user->id;
     }
-
-    public function delete(User $authUser, User $user): bool
-    {
-        return $authUser->isAdmin() || $authUser->id === $user->id;
-    }
-
-    public function changeStatus(User $user): bool
-    {
-        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
-    }
 }

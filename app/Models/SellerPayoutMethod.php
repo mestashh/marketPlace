@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 /**
  * @property mixed $seller_id
  * @method static create(array $array)
+ * @method static where(string $string, $id)
  */
 class SellerPayoutMethod extends Model
 {

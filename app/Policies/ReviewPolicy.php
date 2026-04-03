@@ -51,12 +51,4 @@ class ReviewPolicy
     {
         return $user->hasOrders() && $user->id == $review->user_id;
     }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Review $review): bool
-    {
-        return false;
-    }
 }

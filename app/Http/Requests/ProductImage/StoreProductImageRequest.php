@@ -24,6 +24,7 @@ class StoreProductImageRequest extends FormRequest
         return [
             'path' => ['required', 'string', 'min:5', 'max:255'],
             'is_main' => ['required', 'boolean'],
+            'position' => ['required', 'integer', 'min:1', 'max:5'],
         ];
     }
 }

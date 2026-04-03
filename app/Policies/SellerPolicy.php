@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Enums\AdminRoleEnum;
 use App\Models\Seller;
 use App\Models\User;
 
@@ -13,12 +12,12 @@ class SellerPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return true;
     }
 
-    public function view(User $user, Seller $seller): bool
+    public function view(?User $user, Seller $seller): bool
     {
-        return $user->isAdmin() || $user->id === $seller->user_id;
+        return true;
     }
 
     public function create(User $user): bool
@@ -36,8 +35,8 @@ class SellerPolicy
         return $user->isAdmin() || $user->id === $seller->user_id;
     }
 
-    public function changeStatus(User $user): bool
+    public function showSellerInfo(User $user, Seller $seller): bool
     {
-        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->id === $seller->user->id || $user->isAdmin();
     }
 }

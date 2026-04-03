@@ -18,11 +18,11 @@ class ConversationService
     public function index(User $user)
     {
         if ($user->isAdmin()) {
-            return Conversation::query()->paginate(20);
+            return Conversation::paginate(20);
         } elseif ($user->isSeller()) {
-            return Conversation::where('seller_id', $user->seller->id)->get();
+            return Conversation::where('seller_id', $user->seller->id)->paginate(20);
         } else {
-            return Conversation::where('user_id', $user->id)->get();
+            return Conversation::where('user_id', $user->id)->paginate(20);
         }
     }
 

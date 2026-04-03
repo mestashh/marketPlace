@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::query()->paginate(20);
+        $product = Product::paginate(20);
 
         return ProductResource::collection($product);
     }
@@ -63,13 +63,5 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->noContent();
-    }
-
-    public function changeStatus(ChangeStatusRequest $request, Product $product)
-    {
-        $this->authorize('changeStatus', $product);
-        $product->update($request->validated());
-
-        return new ProductResource($product);
     }
 }

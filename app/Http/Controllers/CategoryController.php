@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::query()->paginate(20);
+        $category = Category::paginate(20);
 
         return CategoryResource::collection($category);
     }

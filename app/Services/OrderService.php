@@ -21,12 +21,10 @@ class OrderService
     public function index(User $user)
     {
         if ($user->isAdmin()) {
-            $order = Order::query()->paginate(20);
+            return Order::paginate(20);
         } else {
-            $order = Order::where('user_id', $user->id)->get();
+            return Order::where('user_id', $user->id)->get();
         }
-
-        return $order;
     }
 
     /**

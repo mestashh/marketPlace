@@ -9,11 +9,10 @@ class ShopService
 {
     public function create(User $user, array $data)
     {
-        $shop = Shop::create([
+        return Shop::create([
             'name' => $data['name'],
             'seller_id' => $user->seller->id,
             'description' => $data['description'],
         ]);
-        return $shop;
     }
 }

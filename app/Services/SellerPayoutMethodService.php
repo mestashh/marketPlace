@@ -14,7 +14,7 @@ class SellerPayoutMethodService
             $methods = SellerPayoutMethod::query()->paginate(20);
 
         } else {
-            $methods = SellerPayoutMethod::where('seller_id', $user->seller->id)->get();
+            $methods = SellerPayoutMethod::where('seller_id', $user->seller->id)->paginate(20);
 
         }
 

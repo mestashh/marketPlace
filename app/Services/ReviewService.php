@@ -14,7 +14,7 @@ class ReviewService
     {
         return Review::where('status', StatusEnum::ACCESS->value)
             ->where('product_id', $product->id)
-            ->get();
+            ->paginate(20);
     }
 
     public function create(User $user, array $data, Product $product)

@@ -37,7 +37,7 @@ class NotificationToUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'conversation.user.conversation-created',
+            markdown: 'emails.conversation.user-conversation-created',
         );
     }
 

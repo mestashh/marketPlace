@@ -9,6 +9,8 @@ use App\Http\Requests\User\VerifyEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
+use Exception;
+use Random\RandomException;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -26,7 +28,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::query()->paginate(20);
+        $users = User::paginate(20);
 
         return UserResource::collection($users);
     }
@@ -50,21 +52,9 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return response()->noContent();
-    }
-
-    public function changeStatus(ChangeStatusRequest $request, User $user)
-    {
-        $this->authorize('changeStatus', $user);
-        $user->update($request->validated());
-
-        return new UserResource($user);
-    }
-
+    /**
+     * @throws Exception
+     */
     public function verifyEmail(VerifyEmailRequest $request)
     {
         $this->userService->verifyEmail($request->user(), $request->email_verification_code);

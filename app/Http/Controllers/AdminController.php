@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\Admin\AdminExistException;
 use App\Exceptions\Conversation\ConversationAdminException;
+use App\Http\Requests\Admin\ChangeStatusRequest;
 use App\Http\Requests\Admin\JoinConversationRequest;
 use App\Http\Requests\Admin\StoreAdminRequest;
 use App\Http\Requests\Admin\UpdateAdminRequest;
@@ -78,5 +79,13 @@ class AdminController extends Controller
         $this->adminService->joinConversation($request->user(), $request->conversation_id);
 
         return response()->json(['message' => 'You have joined']);
+    }
+
+    public function changeStatus(ChangeStatusRequest $request)
+    {
+        $this->authorize('changeStatus', Admin::class);
+        $this->adminService->changeStatus($request->validated());
+
+        return response()->json(['message' => 'Status changed'], 200);
     }
 }

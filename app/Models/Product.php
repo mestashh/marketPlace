@@ -14,6 +14,10 @@ use Illuminate\Support\Str;
  * @property mixed $id
  * @method static inRandomOrder()
  * @method static create(array $array)
+ * @method static find(mixed $id)
+ * @method static findOrFail(mixed $id)
+ * @method static where(string $string, mixed $position)
+ * @method static paginate(int $int)
  */
 class Product extends Model
 {

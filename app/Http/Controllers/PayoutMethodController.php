@@ -19,7 +19,7 @@ class PayoutMethodController extends Controller
      */
     public function index()
     {
-        $payoutMethod = PayoutMethod::query()->paginate(20);
+        $payoutMethod = PayoutMethod::paginate(20);
 
         return PayoutMethodResource::collection($payoutMethod);
     }

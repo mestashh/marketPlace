@@ -34,20 +34,4 @@ class PaymentPolicy
     {
         return $user->hasOrders() && $user->id == $order->user_id && $order->status == OrderStatusEnum::CREATED->value;
     }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Payment $payment): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Payment $payment): bool
-    {
-        return false;
-    }
 }

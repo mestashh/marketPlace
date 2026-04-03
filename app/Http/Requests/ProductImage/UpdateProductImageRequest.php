@@ -24,6 +24,7 @@ class UpdateProductImageRequest extends FormRequest
         return [
             'path' => ['sometimes', 'string', 'min:10', 'max:255'],
             'is_main' => ['sometimes', 'boolean'],
+            'position' => ['required', 'integer', 'min:1', 'max:5'],
         ];
     }
 }

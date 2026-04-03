@@ -25,6 +25,8 @@ class ChangeStatusRequest extends FormRequest
     {
         return [
             'access_status' => ['required', new Enum(StatusEnum::class)],
+            'type' => ['required', 'in:user,seller,product,shop'],
+            'id' => ['required', 'integer'],
         ];
     }
 }

@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 /**
  * @method static inRandomOrder()
  * @method static create(array $array)
+ * @method static paginate(int $int)
  */
 class Category extends Model
 {
-    use hasFactory;
 
     protected $fillable = ['name', 'parent_id'];
 

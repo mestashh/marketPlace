@@ -27,6 +27,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static find(int $int)
  * @method static create(array $array)
  * @method static whereHas(string $string)
+ * @method static findOrFail(mixed $id)
+ * @method static paginate(int $int)
  */
 class User extends Authenticatable
 {
