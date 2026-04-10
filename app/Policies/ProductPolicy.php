@@ -6,7 +6,6 @@ use App\Enums\AdminRoleEnum;
 use App\Enums\StatusEnum;
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
@@ -39,14 +38,10 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
-        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === StatusEnum::ACCESS->value;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Product $product): bool
-    {
-        return $user->seller->shop->id == $product->shop_id && $user->seller->access_status === StatusEnum::ACCESS->value;
+        return $user->isSeller() &&
+            $user->seller->hasShop() &&
+            $user->seller->shop->id == $product->shop_id &&
+            $user->seller->access_status === StatusEnum::ACCESS->value ||
+            ($user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value);
     }
 }

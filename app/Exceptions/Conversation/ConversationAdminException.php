@@ -8,6 +8,6 @@ class ConversationAdminException extends Exception
 {
     public function render(): \Illuminate\Http\JsonResponse
     {
-        return response()->json(['message' => 'Admin not requested or already connected']);
+        return response()->json(['message' => 'Admin not requested or already connected'], 409);
     }
 }

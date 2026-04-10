@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,6 +22,7 @@ class ReviewFactory extends Factory
         return [
             'rating' => fake()->biasedNumberBetween(1, 5),
             'text' => fake()->text(),
+            'access_status' => fake()->randomElement(StatusEnum::cases()),
         ];
     }
 }

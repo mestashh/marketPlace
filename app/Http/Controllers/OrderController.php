@@ -8,7 +8,7 @@ use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Services\OrderService;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 use Throwable;
 
 class OrderController extends Controller

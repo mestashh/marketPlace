@@ -48,15 +48,4 @@ class ProductVariantController extends Controller
         return new ProductVariantResource($productVariant);
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product, ProductVariant $productVariant)
-    {
-        $this->authorize('delete', $productVariant);
-        $productVariant->delete();
-
-        return response()->noContent();
-    }
 }

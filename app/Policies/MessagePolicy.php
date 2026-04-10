@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\AdminRoleEnum;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
@@ -14,7 +15,7 @@ class MessagePolicy
      */
     public function viewAny(User $user, Conversation $c): bool
     {
-        return $user->isAdmin() || $c->user_id == $user->id || $c->seller_id == $user->seller->id;
+        return $user->isAdmin() || $c->user_id == $user->id || ($user->isSeller() && $c->seller_id == $user->seller->id);
     }
 
     /**
@@ -30,6 +31,9 @@ class MessagePolicy
      */
     public function create(User $user, Conversation $c): bool
     {
-        return $user->isAdmin() || $c->user_id == $user?->id || $c->seller_id == $user?->seller?->id;
+        return ($user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value) ||
+            $c->user_id == $user->id ||
+            $c->seller_id == $user->seller?->id ||
+            ($c->admin_id == $user?->admin?->id);
     }
 }

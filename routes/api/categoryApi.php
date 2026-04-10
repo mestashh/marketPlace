@@ -2,5 +2,4 @@
 
 use App\Http\Controllers\CategoryController;
 
-Route::apiResource('categories', CategoryController::class)
-    ->only(['index', 'show']);
+Route::ApiResource('/categories', CategoryController::class)->only(['update', 'store']);

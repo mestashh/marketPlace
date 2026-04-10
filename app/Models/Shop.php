@@ -15,8 +15,10 @@ use Illuminate\Support\Str;
  * @method static create(array $array)
  * @method static findOrFail(mixed $id)
  * @method static paginate(int $int)
+ * @method static where(string $string, string $value)
  * @property mixed $seller
  * @property mixed $seller_id
+ * @property mixed $access_status
  */
 class Shop extends Model
 {

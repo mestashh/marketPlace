@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\StatusEnum;
 use App\Http\Requests\Seller\StoreSellerRequest;
 use App\Http\Requests\Seller\UpdateSellerRequest;
-use App\Http\Resources\SellerForAdminResource;
-use App\Http\Resources\SellerForUserResource;
+use App\Http\Resources\Seller\SellerForAdminResource;
+use App\Http\Resources\Seller\SellerForUserResource;
 use App\Models\Seller;
 use App\Services\SellerService;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
@@ -61,12 +61,5 @@ class SellerController extends Controller
         $seller->update($request->validated());
 
         return new SellerForUserResource($seller);
-    }
-
-    public function destroy(Seller $seller)
-    {
-        $seller->delete();
-
-        return response()->noContent();
     }
 }

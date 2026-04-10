@@ -7,4 +7,5 @@ enum StatusEnum: string
     case ACCESS = 'access';
     case BANNED = 'banned';
     case CHECKING = 'checking';
+    case INACTIVE = 'inactive';
 }

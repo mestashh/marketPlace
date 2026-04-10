@@ -8,6 +8,6 @@ class AdminExistException extends Exception
 {
     public function render(): \Illuminate\Http\JsonResponse
     {
-        return response()->json(['message' => 'User already admin']);
+        return response()->json(['message' => 'User already admin'], 400);
     }
 }

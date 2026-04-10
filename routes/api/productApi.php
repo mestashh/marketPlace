@@ -5,7 +5,7 @@ use App\Http\Controllers\ProductImageController;
 use App\Http\Controllers\ProductVariantController;
 
 Route::apiResource('products', ProductController::class)
-    ->except(['index', 'show']);
+    ->except(['index', 'show', 'destroy']);
 
 Route::apiResource('products/{product}/variants', ProductVariantController::class)
     ->parameters([

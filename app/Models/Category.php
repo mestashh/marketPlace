@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
  * @method static inRandomOrder()
  * @method static create(array $array)
  * @method static paginate(int $int)
+ * @method static where(string $string)
+ * @property mixed $id
  */
 class Category extends Model
 {

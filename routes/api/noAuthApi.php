@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImageController;
@@ -12,7 +13,11 @@ use App\Http\Controllers\UserController;
 Route::apiResource('paymentMethods', PaymentMethodController::class)
     ->only(['index', 'show']);
 
-Route::apiResource('product/{product}/variant', ProductVariantController::class)
+
+Route::apiResource('products', ProductController::class) // Товары
+    ->only(['index', 'show']);
+
+Route::apiResource('products/{product}/variants', ProductVariantController::class)
     ->parameters([
         'product' => 'product',
         'variant' => 'productVariant',
@@ -23,7 +28,7 @@ Route::apiResource('product/{product}/variant', ProductVariantController::class)
     ])
     ->only(['index', 'show']);
 
-Route::apiResource('product/{product}/image', ProductImageController::class)
+Route::apiResource('products/{product}/images', ProductImageController::class)
     ->parameters([
         'product' => 'product',
         'image' => 'productImage',
@@ -34,7 +39,7 @@ Route::apiResource('product/{product}/image', ProductImageController::class)
     ])
     ->only(['index', 'show']);
 
-Route::get('shops', [ShopController::class, 'index']); // all shops
+Route::apiResource('shops', ShopController::class)->only(['index', 'show']);
 
 Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
 
@@ -42,8 +47,9 @@ Route::post('auth/token', [UserController::class, 'getBearerToken']); // API tok
 Route::post('auth/register', [UserController::class, 'store']); // регистрация аккаунта
 
 
-Route::apiResource('reviews', ReviewController::class) // Отзывы
+Route::apiResource('products/{product}/reviews', ReviewController::class) // Отзывы
     ->except(['destroy']);
 
-Route::apiResource('products', ProductController::class)
+Route::apiResource('categories', CategoryController::class)
     ->only(['index', 'show']);
+

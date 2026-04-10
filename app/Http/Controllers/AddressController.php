@@ -7,7 +7,7 @@ use App\Http\Requests\Address\UpdateAddressRequest;
 use App\Http\Resources\AddressResource;
 use App\Models\Address;
 use App\Services\AddressService;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class AddressController extends Controller
 {

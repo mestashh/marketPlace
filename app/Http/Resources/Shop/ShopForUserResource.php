@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Shop;
 
+use App\Http\Resources\Product\ProductForUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,8 +13,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $status
  * @property mixed $uuid
  * @property mixed $seller
+ * @property mixed $products
  */
-class ShopResource extends JsonResource
+class ShopForUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,6 +28,7 @@ class ShopResource extends JsonResource
             'seller_uuid' => $this->seller->uuid,
             'name' => $this->name,
             'description' => $this->description,
+            'products' => ProductForUserResource::collection($this->products),
         ];
     }
 }

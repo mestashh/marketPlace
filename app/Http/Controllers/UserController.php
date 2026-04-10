@@ -10,8 +10,8 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\UserService;
 use Exception;
+use Illuminate\Http\Request;
 use Random\RandomException;
-use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {

@@ -10,7 +10,7 @@ use App\Models\Conversation;
 use App\Models\Order;
 use App\Models\ShopOrder;
 use App\Services\ConversationService;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class ConversationController extends Controller
 {

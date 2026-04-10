@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Review;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $text
  * @property mixed $uuid
  */
-class ReviewResource extends JsonResource
+class ReviewForUserResource extends JsonResource
 {
 
     /**

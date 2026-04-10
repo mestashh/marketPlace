@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Admin\ChangeStatusRequest;
+use App\Enums\StatusEnum;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Product\ProductForAdminResource;
+use App\Http\Resources\Product\ProductForUserResource;
 use App\Models\Product;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -20,11 +22,16 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = Product::paginate(20);
+        if ($request->user() && $request->user()->isAdmin()) {
+            $products = Product::paginate(20);
 
-        return ProductResource::collection($product);
+            return ProductForAdminResource::collection($products);
+        }
+        $products = Product::where('access_status', StatusEnum::ACCESS->value)->paginate(20);
+
+        return ProductForUserResource::collection($products);
     }
 
     /**
@@ -34,7 +41,7 @@ class ProductController extends Controller
     {
         $product = $this->productService->create($request->user(), $request->validated());
 
-        return new ProductResource($product);
+        return new ProductForUserResource($product);
     }
 
     /**
@@ -42,7 +49,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return new ProductResource($product);
+        return new ProductForUserResource($product);
     }
 
     /**
@@ -52,16 +59,6 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
 
-        return new ProductResource($product);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        $product->delete();
-
-        return response()->noContent();
+        return new ProductForUserResource($product);
     }
 }

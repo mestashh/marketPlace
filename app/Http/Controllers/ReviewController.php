@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\StatusEnum;
+use App\Exceptions\Review\ReviewNotFoundException;
 use App\Http\Requests\Review\StoreReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
-use App\Http\Resources\ReviewResource;
+use App\Http\Resources\Review\ReviewForAdminResource;
+use App\Http\Resources\Review\ReviewForUserResource;
 use App\Models\Product;
 use App\Models\Review;
 use App\Services\ReviewService;
+use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
@@ -17,11 +19,11 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Product $product)
+    public function index(Request $request, Product $product)
     {
-        $review = $this->reviewService->index($product);
+        $review = $this->reviewService->index($request->user(), $product);
 
-        return ReviewResource::collection($review);
+        return ReviewForUserResource::collection($review);
     }
 
     /**
@@ -32,15 +34,23 @@ class ReviewController extends Controller
         $this->authorize('create', [Review::class, $product]);
         $review = $this->reviewService->create($request->user(), $request->validated(), $product);
 
-        return new ReviewResource($review);
+        return new ReviewForUserResource($review);
     }
 
     /**
      * Display the specified resource.
+     *
+     * @throws ReviewNotFoundException
      */
-    public function show(Product $product, Review $review)
+    public function show(Request $request, Product $product, Review $review)
     {
-        return new ReviewResource($review);
+        $review = $this->reviewService->show($request->user(), $review);
+
+        if ($request->user() && $request->user()->isAdmin()) {
+            return new ReviewForAdminResource($review);
+        } else {
+            return new ReviewForUserResource($review);
+        }
     }
 
     /**
@@ -51,6 +61,6 @@ class ReviewController extends Controller
         $this->authorize('update', [Review::class, $review]);
         $review->update($request->validated());
 
-        return new ReviewResource($review);
+        return new ReviewForUserResource($review);
     }
 }

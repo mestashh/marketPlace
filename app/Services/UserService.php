@@ -9,8 +9,8 @@ use App\Exceptions\Email\InvalidCodeException;
 use App\Exceptions\Email\TooManyAttemptsException;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpFoundation\Request;
 
 class UserService
 {

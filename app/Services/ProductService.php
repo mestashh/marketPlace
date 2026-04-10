@@ -13,6 +13,7 @@ class ProductService
         return Product::create([
             'shop_id' => $user->seller->shop->id,
             'category_id' => $data['category_id'],
+            'quantity' => $data['quantity'],
             'name' => $data['name'],
             'description' => $data['description'],
         ]);

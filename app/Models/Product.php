@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
  * @property mixed $shop_id
  * @property mixed $productVariants
  * @property mixed $id
+ * @property mixed $uuid
  * @method static inRandomOrder()
  * @method static create(array $array)
  * @method static find(mixed $id)
@@ -23,7 +24,7 @@ class Product extends Model
 {
     use hasFactory;
 
-    protected $fillable = ['name', 'description', 'status', 'category_id', 'shop_id', 'access_status'];
+    protected $fillable = ['name', 'description', 'status', 'category_id', 'shop_id', 'access_status', 'quantity'];
 
     public function productImages(): HasMany
     {

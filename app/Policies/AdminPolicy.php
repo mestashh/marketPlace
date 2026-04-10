@@ -13,7 +13,7 @@ class AdminPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     /**
@@ -21,7 +21,7 @@ class AdminPolicy
      */
     public function view(User $user, Admin $admin): bool
     {
-        return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     /**
@@ -29,7 +29,7 @@ class AdminPolicy
      */
     public function create(User $user): bool
     {
-        return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     /**
@@ -37,7 +37,7 @@ class AdminPolicy
      */
     public function update(User $user, Admin $admin): bool
     {
-        return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     /**
@@ -45,7 +45,7 @@ class AdminPolicy
      */
     public function delete(User $user, Admin $admin): bool
     {
-        return $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     public function joinConversation(User $user): bool

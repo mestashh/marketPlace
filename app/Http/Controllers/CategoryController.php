@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CategoryExistsException;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Services\CategoryService;
 
 class CategoryController extends Controller
 {
-    public function __construct()
+    public function __construct(private readonly CategoryService $categoryService)
     {
         $this->authorizeResource(Category::class, 'category');
     }
@@ -26,14 +28,11 @@ class CategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws CategoryExistsException
      */
     public function store(StoreCategoryRequest $request)
     {
-        $data = $request->validated();
-        $category = Category::create([
-            'parent_id' => $data['parent_id'] ?? null,
-            'name' => $data['name'],
-        ]);
+        $category = $this->categoryService->store($request->validated());
 
         return new CategoryResource($category);
     }
@@ -48,21 +47,12 @@ class CategoryController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws CategoryExistsException
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $category = $this->categoryService->update($request->validated(), $category);
 
         return new CategoryResource($category);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        $category->delete();
-
-        return response()->noContent();
     }
 }

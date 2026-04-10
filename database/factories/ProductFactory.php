@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusEnum;
 use App\Models\Category;
 use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,6 +24,7 @@ class ProductFactory extends Factory
             'name' => fake()->word(),
             'quantity' => fake()->biasedNumberBetween(1, 100000),
             'description' => fake()->text(50),
+            'access_status' => fake()->randomElement(StatusEnum::cases()),
         ];
     }
 }

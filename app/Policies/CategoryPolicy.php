@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Enums\AdminRoleEnum;
 use App\Models\Category;
 use App\Models\User;
 
@@ -28,7 +29,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
     }
 
     /**
@@ -36,14 +37,6 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        return $user->isAdmin();
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Category $category): bool
-    {
-        return $user->isAdmin();
+        return $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
     }
 }

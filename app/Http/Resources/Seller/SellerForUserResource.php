@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Seller;
 
+use App\Http\Resources\Shop\ShopForUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -10,6 +11,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $withdrawable_balance
  * @property mixed $TIN
  * @property mixed $uuid
+ * @property mixed $shop
+ * @property mixed $user
  */
 class SellerForUserResource extends JsonResource
 {
@@ -23,9 +26,9 @@ class SellerForUserResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'balance' => $this->balance,
-            'withdrawable_balance' => $this->withdrawable_balance,
-            'TIN' => $this->TIN,
+            'first_name' => $this->user->first_name,
+            'last_name' => $this->user->last_name,
+            'shop' => new ShopForUserResource($this->shop),
         ];
     }
 }

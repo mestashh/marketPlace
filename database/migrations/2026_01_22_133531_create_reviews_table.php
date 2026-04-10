@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->unsignedSmallInteger('rating');
             $table->text('text');
-            $table->enum('status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
+            $table->enum('access_status', StatusEnum::cases())->default(StatusEnum::CHECKING->value);
             $table->unique(['user_id', 'product_id']);
             $table->timestampsTZ();
         });

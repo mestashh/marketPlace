@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Product;
 
+use App\Http\Resources\ProductImageResource;
+use App\Http\Resources\ProductVariantResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,8 +14,10 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $description
  * @property mixed $status
  * @property mixed $category
+ * @property mixed $productVariants
+ * @property mixed $productImages
  */
-class ProductResource extends JsonResource
+class ProductForUserResource extends JsonResource
 {
 
     /**
@@ -29,6 +33,8 @@ class ProductResource extends JsonResource
             'category_uuid' => $this->category->uuid,
             'name' => $this->name,
             'description' => $this->description,
+            'product_variants' => ProductVariantResource::collection($this->productVariants),
+            'product_images' => ProductImageResource::collection($this->productImages),
         ];
     }
 }

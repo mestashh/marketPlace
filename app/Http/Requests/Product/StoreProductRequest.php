@@ -25,6 +25,7 @@ class StoreProductRequest extends FormRequest
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'name' => ['required', 'string', 'max:50'],
             'description' => ['string', 'max:100'],
+            'quantity' => ['numeric', 'min:1', 'max:100000'],
         ];
     }
 }

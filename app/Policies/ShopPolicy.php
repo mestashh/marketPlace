@@ -16,28 +16,18 @@ class ShopPolicy
         return true;
     }
 
-    public function view(User $user, Shop $shop): bool
+    public function view(?User $user, Shop $shop): bool
     {
-        return $user->isAdmin() || $user->id === $shop->seller->user_id;
+        return true;
     }
 
     public function create(User $user): bool
     {
-        return $user->isSeller() && $user->seller->access_status === StatusEnum::ACCESS->value;
+        return $user->isSeller() && $user->seller->access_status === StatusEnum::ACCESS->value && ! $user->seller->hasShop();
     }
 
     public function update(User $user, Shop $shop): bool
     {
-        return $shop->seller_id === $user->seller->id;
-    }
-
-    public function delete(User $user, Shop $shop): bool
-    {
-        return $user->isAdmin() || $user->id == $shop->seller->user_id;
-    }
-
-    public function showShopForOwnerResource(User $user, Shop $shop): bool
-    {
-        return $user->id === $shop->seller->user->id || $user->isAdmin();
+        return $user->isSeller() && $shop->seller_id === $user->seller->id || $user->isAdmin();
     }
 }

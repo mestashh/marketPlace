@@ -8,6 +8,6 @@ class InvalidCodeException extends Exception
 {
     public function render()
     {
-        return response()->json(['message' => 'Invalid code, try one more'], 400);
+        return response()->json(['message' => 'Invalid code, try one more'], 422);
     }
 }

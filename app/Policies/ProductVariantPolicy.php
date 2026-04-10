@@ -40,12 +40,4 @@ class ProductVariantPolicy
     {
         return $user?->seller?->shop?->id === $productVariant->product?->shop_id || ($user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value);
     }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, ProductVariant $productVariant): bool
-    {
-        return ($user->seller?->shop?->id === $productVariant->product?->shop_id) || ($user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value);
-    }
 }
