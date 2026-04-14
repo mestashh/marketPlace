@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\AdminRoleEnum;
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\User;
@@ -22,7 +23,18 @@ class ProductImagePolicy
      */
     public function view(?User $user, ProductImage $productImage): bool
     {
-        return true;
+        if ($productImage->access_status === StatusEnum::ACCESS->value) {
+            return true;
+        }
+
+        if (! $user) {
+            return false;
+        }
+
+        return $user->isAdmin() ||
+                ($user->isSeller() &&
+                    $user->seller->hasShop() &&
+                    $user->seller->id === $productImage->product->shop->seller->id);
     }
 
     /**
@@ -38,7 +50,8 @@ class ProductImagePolicy
      */
     public function update(User $user, ProductImage $productImage): bool
     {
-        return $user?->seller?->shop?->id === $productImage?->product?->shop_id || $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
+        return $user->seller->shop->id === $productImage->product->shop_id
+            || ($user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value);
     }
 
     /**
@@ -46,6 +59,10 @@ class ProductImagePolicy
      */
     public function delete(User $user, ProductImage $productImage): bool
     {
-        return $user?->seller?->shop?->id === $productImage?->product?->shop_id || $user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value;
+
+        return ($user->isSeller() &&
+                $user->seller->hasShop() &&
+                $user->seller->id === $productImage->product->shop->seller->id) ||
+            ($user->isAdmin() && $user->admin->role === AdminRoleEnum::SUPER_ADMIN->value);
     }
 }

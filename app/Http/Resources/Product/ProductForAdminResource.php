@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Product;
 
-use App\Http\Resources\ProductImageResource;
-use App\Http\Resources\ProductVariantResource;
+use App\Http\Resources\ProductImage\ProductImageForUserResource;
+use App\Http\Resources\ProductVariant\ProductVariantForUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,8 +33,8 @@ class ProductForAdminResource extends JsonResource
             'name' => $this->name,
             'access_status' => $this->access_status,
             'description' => $this->description,
-            'product_variants' => ProductVariantResource::collection($this->productVariants),
-            'product_images' => ProductImageResource::collection($this->productImages),
+            'product_variants' => ProductVariantForUserResource::collection($this->productVariants),
+            'product_images' => ProductImageForUserResource::collection($this->productImages),
         ];
     }
 }

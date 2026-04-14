@@ -10,17 +10,17 @@ Route::apiResource('products', ProductController::class)
 Route::apiResource('products/{product}/variants', ProductVariantController::class)
     ->parameters([
         'product' => 'product',
-        'variant' => 'productVariant',
+        'variants' => 'productVariant',
     ])
     ->scoped([
         'product' => 'uuid',
         'productVariant' => 'uuid',
     ])
-    ->except(['index', 'show']);
+    ->except(['index', 'show', 'destroy']);
 Route::apiResource('products/{product}/images', ProductImageController::class)
     ->parameters([
         'product' => 'product',
-        'image' => 'productImage',
+        'images' => 'productImage',
     ])
     ->scoped([
         'product' => 'uuid',

@@ -20,7 +20,7 @@ Route::apiResource('products', ProductController::class) // Товары
 Route::apiResource('products/{product}/variants', ProductVariantController::class)
     ->parameters([
         'product' => 'product',
-        'variant' => 'productVariant',
+        'variants' => 'productVariant',
     ])
     ->scoped([
         'product' => 'uuid',
@@ -31,7 +31,7 @@ Route::apiResource('products/{product}/variants', ProductVariantController::clas
 Route::apiResource('products/{product}/images', ProductImageController::class)
     ->parameters([
         'product' => 'product',
-        'image' => 'productImage',
+        'images' => 'productImage',
     ])
     ->scoped([
         'product' => 'uuid',

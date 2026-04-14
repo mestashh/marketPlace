@@ -19,7 +19,7 @@ class ProductVariant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'stock', 'sku', 'access_status', 'product_id', 'uuid', 'productVariant_id'];
+    protected $fillable = ['name', 'description', 'price', 'stock', 'sku', 'access_status', 'product_id', 'uuid'];
 
     public function cartItems(): HasMany
     {

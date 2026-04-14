@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ProductImage\ProductImageForUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -25,7 +26,7 @@ class CartItemResource extends JsonResource
             'product_variant_uuid' => $this->productVariant->uuid,
             'quantity' => $this->quantity,
             'price' => $this->price,
-            'images' => ProductImageResource::collection($this->productVariant->product->productImages),
+            'images' => ProductImageForUserResource::collection($this->productVariant->product->productImages),
         ];
     }
 }

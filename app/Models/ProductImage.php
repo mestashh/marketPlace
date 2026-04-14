@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 /**
  * @property mixed|null $product
  * @property mixed $path
+ * @property mixed $access_status
+ * @method static create(array $array)
  */
 class ProductImage extends Model
 {

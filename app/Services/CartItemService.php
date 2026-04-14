@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\CartItem\ProductVariantStockException;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\ProductVariant;
 use Throwable;
 
@@ -41,5 +42,18 @@ class CartItemService
             'quantity' => $data['quantity'],
             'price' => $product->price,
         ]);
+    }
+
+    /**
+     * @throws ProductVariantStockException
+     */
+    public function update(array $data, CartItem $cartItem): CartItem
+    {
+        if ($cartItem->productVariant->stock < $data['quantity']) {
+            throw new ProductVariantStockException;
+        }
+        $cartItem->quantity = $data['quantity'];
+        $cartItem->save();
+        return $cartItem;
     }
 }

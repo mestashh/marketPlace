@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ProductVariant;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -14,7 +14,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $sku
  * @property mixed $uuid
  */
-class ProductVariantResource extends JsonResource
+class ProductVariantForUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

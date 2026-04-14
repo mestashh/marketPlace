@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 
 /**
  * @property mixed $cart
+ * @property mixed $quantity
+ * @property mixed $productVariant
  */
 class CartItem extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CartItem\ProductVariantStockException;
 use App\Http\Requests\Cart\StoreCartItemRequest;
 use App\Http\Requests\Cart\UpdateCartItemRequest;
 use App\Http\Resources\CartItemResource;
@@ -22,30 +23,23 @@ class CartItemController extends Controller
     public function store(StoreCartItemRequest $request)
     {
         $data = $request->validated();
-        $this->authorize('create', [CartItem::class, ProductVariant::where('id', $data['product_variant_id'])->first()]);
+        $this->authorize('create', [CartItem::class, ProductVariant::findOrFail($data['product_variant_id'])]);
         $item = $this->cartItemService->store($request->user()->cart, $data);
 
         return new CartItemResource($item);
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(CartItem $item)
-    {
-        $this->authorize('view', CartItem::class);
-        return new CartItemResource($item);
-    }
-
-    /**
      * Update the specified resource in storage.
+     *
+     * @throws ProductVariantStockException
      */
     public function update(UpdateCartItemRequest $request, CartItem $item)
     {
-        $this->authorize('update', CartItem::class);
-        $item->update($request->validated());
+        $this->authorize('update', $item);
+        $cartItem = $this->cartItemService->update($request->validated(), $item);
 
-        return new CartItemResource($item);
+        return new CartItemResource($cartItem);
     }
 
     /**
@@ -53,7 +47,7 @@ class CartItemController extends Controller
      */
     public function destroy(CartItem $item)
     {
-        $this->authorize('delete', CartItem::class);
+        $this->authorize('delete', $item);
         $item->delete();
 
         return response()->noContent();

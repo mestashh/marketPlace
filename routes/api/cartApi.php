@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CartItemController;
 
-Route::prefix('carts')->group(function () {
-    Route::post('items/{item}', [CartItemController::class, 'store']);
+Route::prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'show']);
     Route::apiResource('items', CartItemController::class)
-        ->except(['show', 'index', 'post']);
+        ->parameters([
+            'items' => 'item',
+        ])
+        ->except(['index', 'show']);
 });

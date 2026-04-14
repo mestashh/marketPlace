@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\AdminRoleEnum;
+use App\Enums\StatusEnum;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
@@ -22,7 +23,13 @@ class ProductVariantPolicy
      */
     public function view(?User $user, ProductVariant $productVariant): bool
     {
-        return true;
+        if ($productVariant->access_status === StatusEnum::ACCESS->value) {
+            return true;
+        }
+
+        return $user && ($user->isAdmin() ||
+            $user->isSeller() && $user->seller->hasShop() &&
+            $user->seller->id === $productVariant->product->shop->seller_id);
     }
 
     /**
@@ -38,6 +45,7 @@ class ProductVariantPolicy
      */
     public function update(User $user, ProductVariant $productVariant): bool
     {
-        return $user?->seller?->shop?->id === $productVariant->product?->shop_id || ($user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value);
+        return $user->isSeller() && ($user->seller->id === $productVariant->product->shop->seller_id) ||
+            ($user->isAdmin() && $user->admin->role == AdminRoleEnum::SUPER_ADMIN->value);
     }
 }

@@ -21,7 +21,7 @@ class CategoryTest extends TestCase
             'name' => 'Test',
         ]);
         Category::create([
-            'parent_id' => 1,
+            'parent_id' => null,
             'name' => 'Test2',
         ]);
         Category::create([

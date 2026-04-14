@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\ProductImage;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -11,8 +11,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $uuid
  * @property mixed $is_main
  * @property mixed $position
+ * @property mixed $access_status
  */
-class ProductImageResource extends JsonResource
+class ProductImageForAdminResource extends JsonResource
 {
 
     /**
@@ -24,7 +25,8 @@ class ProductImageResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'product_uuid' => $this->product->uuid,
+            'status' => $this->access_status,
+            'product_uuid' => $this?->product?->uuid,
             'path' => $this->path,
             'is_main' => $this->is_main,
             'position' => $this->position,
