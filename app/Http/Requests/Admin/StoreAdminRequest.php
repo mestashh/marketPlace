@@ -25,7 +25,7 @@ class StoreAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => ['required', new Enum(AdminRoleEnum::class)],
+            'role' => ['required', new Enum(AdminRoleEnum::class), Rule::notIn(AdminRoleEnum::SUPER_ADMIN->value)],
             'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }

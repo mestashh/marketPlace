@@ -57,8 +57,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update($request->validated());
+        $updatedProduct = $this->productService->update($request->user(), $request->validated(), $product);
 
-        return new ProductForUserResource($product);
+        return new ProductForUserResource($updatedProduct);
     }
 }

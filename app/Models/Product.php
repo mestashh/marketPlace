@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  * @property mixed $id
  * @property mixed $uuid
  * @property mixed $shop
+ * @property mixed|string $access_status
  * @method static inRandomOrder()
  * @method static create(array $array)
  * @method static find(mixed $id)
